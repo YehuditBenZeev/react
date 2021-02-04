@@ -1,14 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import SignUpPage from './signUpPage';
+import LoginPage from './login';
 import reportWebVitals from './reportWebVitals';
 import Auth from './auth';
 
 ReactDOM.render(
   <Auth>
-    <SignUpPage />
-    </Auth>,
+    <LoginPage />
+  </Auth>,
   document.getElementById('root')
 );
 

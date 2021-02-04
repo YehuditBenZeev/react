@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import firebaseService from './firebase_services/firebaseService';
 import SignUpPage from './signUpPage';
+import LoginPage from './login';
 
 class Auth extends Component {
     state = {

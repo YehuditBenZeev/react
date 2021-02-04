@@ -7,12 +7,12 @@ import SignedApp from './SignedApp';
 function LoginPage() {
     const [signed, setSigned] = useState(false);
     const [inputFields, setInputFields] = useState({ email: '', password: ''}); // '' is the initial state value
-    let displayName = ''
+    const [name, setName] = useState('');
 
     function mySubmitHandler(event) {
         event.preventDefault();
         firebaseService.userLogin(inputFields).then((value) => {
-                displayName = value;
+                setName(value)
                 setSigned(true);
         }
         ).catch(error=>{
@@ -24,8 +24,7 @@ function LoginPage() {
         setInputFields({ ...inputFields, [event.target.name]: event.target.value })
     }
 
-    return signed ? <SignedApp displayName={displayName}/> : (
-        <div>
+    return signed ? <SignedApp displayName={name}/> : (
             <form onSubmit={mySubmitHandler}>
                 <p>Enter your email:</p>
                 <input
@@ -44,7 +43,6 @@ function LoginPage() {
                 <br />
                 <input type='submit' />
             </form>
-        </div>
     );
 }
 

@@ -1,16 +1,15 @@
 import logo from './logo.svg';
 import './App.css';
 
-function App() {
+function SignedApp(props) {
+    const text = 'user logedin/ signedup.' + props.displayName
   return (
     <div className="App">
       <header className="App-header">
-        <p>
-          use sign up.
-        </p>
+        <div>{text}</div>
       </header>
     </div>
   );
 }
 
-export default App;
+export default SignedApp;

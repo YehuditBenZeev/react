@@ -13,7 +13,6 @@ class FirebaseService {
         this.db = firebase.firestore();
         this.auth = firebase.auth();
         success(true);
-
     }
 
     UserSignUp = (userDetails) => {

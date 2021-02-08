@@ -1,18 +1,29 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import LoginPage from './login';
-import reportWebVitals from './reportWebVitals';
-import Auth from './auth';
+import React from "react";
+import ReactDOM from "react-dom";
+import { createBrowserHistory } from "history";
+import { Router, Route, Switch, Redirect } from "react-router-dom";
+import Admin from "./layouts/Admin.js";
+import Registration from "./layouts/Registration.js";
+import firebaseService from "./firebase_services/firebaseService.js";
+import "./assets/css/material-dashboard-react.css";
 
-ReactDOM.render(
-  <Auth>
-    <LoginPage />
-  </Auth>,
-  document.getElementById('root')
+const hist = createBrowserHistory();
+
+firebaseService.init(
+  success => {
+      if ( !success )
+      {
+          return;
+      }
+  }
 );
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+ReactDOM.render(
+  <Router history={hist}>
+    <Switch>
+      <Route path="/admin" component={Admin} />
+      <Route path="/registration" component={Registration} />
+      <Redirect from="/" to="/admin/dashboard" />
+    </Switch>
+  </Router>,
+  document.getElementById("root")
+);

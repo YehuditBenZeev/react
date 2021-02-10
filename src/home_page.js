@@ -2,6 +2,7 @@ import React from 'react';
 import { useState, useEffect } from 'react';
 import firebaseService from './firebase_services/firebaseService';
 import SignedApp from './SignedApp';
+import {Button, Table} from '@material-ui/core';
 
 
 
@@ -16,7 +17,7 @@ function Beginner() {
   }
   
 function activateLasers(){
-    render(<Beginner/>);
+    render(<Beginner/>, document.getElementById("main"));
   }
 
 function LoadingHomePage() {
@@ -52,7 +53,7 @@ function LoadingHomePage() {
            </td>
            
            <td>
-            <div className="main">
+            <div id="main">
             </div>
            </td>
            
@@ -65,6 +66,6 @@ function LoadingHomePage() {
 }
   
 render(<LoadingHomePage/>);
-  
+render(<Beginner/>); 
 
 export default HomePage;

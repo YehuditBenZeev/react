@@ -13,7 +13,6 @@ class FirebaseService {
         this.db = firebase.firestore();
         this.auth = firebase.auth();
         success(true);
-
     }
 
     UserSignUp = (userDetails) => {
@@ -106,6 +105,17 @@ class FirebaseService {
             return;
         }
         this.auth.onAuthStateChanged(callback);
+    }
+
+    //get words by category
+    getWordsByCategory = (category) => {
+        return new Promise((resolve, reject) => {
+            this.db.collection('words').doc(category).get().then((word) => {
+                resolve(word.data());
+            }).catch((error) => {
+                reject(error)
+            })
+        })
     };
 
 }

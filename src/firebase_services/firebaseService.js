@@ -16,7 +16,8 @@ class FirebaseService {
     }
 
     UserSignUp = (userDetails) => {
-        const { email, password, displayName } = userDetails;
+        console.log(userDetails);
+        const { email, password, username } = userDetails;
         return new Promise((res, rej) => {
             this.auth && this.auth.createUserWithEmailAndPassword(email, password).then(
                 (response) => {
@@ -24,7 +25,7 @@ class FirebaseService {
                     const user = response.user;
                     this.db.collection('users').doc(user.uid).set({
                         email: email,
-                        displayName: displayName
+                        displayName: username
                     }).then(() => {
                         res(true)
                     }).catch((err) => rej(false))

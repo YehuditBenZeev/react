@@ -88,14 +88,6 @@ export default function NavbarLinks() {
                   <MenuList role="menu">
                     <MenuItem
                       component={Link}
-                      to="/admin/user"
-                      onClick={handleClose}
-                      className={classes.dropdownItem}
-                    >
-                      הגדרות
-                    </MenuItem>
-                    <MenuItem
-                      component={Link}
                       to="/registration/login"
                       onClick={handleClose}
                       className={classes.dropdownItem}

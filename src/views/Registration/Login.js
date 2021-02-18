@@ -1,26 +1,20 @@
 import React from 'react';
-import { useState, useRef,} from 'react';
+import { useState, useRef, } from 'react';
 import firebaseService from 'firebase_services/firebaseService';
-import { Button, InputAdornment, Icon, TextField, Typography, Card, CardContent } from '@material-ui/core';
+import { Button, InputAdornment, Icon, Typography, Card, CardContent } from '@material-ui/core';
 import { Route, Link, Router, Redirect } from "react-router-dom";
 import Admin from "layouts/Admin.js";
+import CustomTextField from "components/CustomInput/CustomInput.js";
+import RegularButton from "components/CustomButtons/Button";
 import { createBrowserHistory } from "history";
-
+import Formsy from 'formsy-react';
 import ReactDOM from "react-dom";
 
-
-
+  
 function Login() {
-    const [signed, setSigned] = useState(false);
-    const [inputFields, setInputFields] = useState({ email: '', password: '' }); // '' is the initial state value
-    const [name, setName] = useState('');
     const [isFormValid, setIsFormValid] = useState(false);
     const formRef = useRef(null);
 
-    function changeValue(event) {
-        setInputFields({ ...inputFields, [event.target.name]: event.target.value })
-
-    }
 
     function disableButton() {
         setIsFormValid(false);
@@ -30,30 +24,38 @@ function Login() {
         setIsFormValid(true);
     }
 
-    function handleSubmit(event) {
-        event.preventDefault();
-        firebaseService.userLogin(inputFields).then((value) => {
+    function handleSubmit(model) {
+        firebaseService.userLogin(model).then((value) => {
             ReactDOM.render(
                 <Router history={createBrowserHistory()}><Route path="/admin" component={Admin} /></Router>
-            , document.getElementById("root"))
+                , document.getElementById("root"))
             window.location.href = '/admin/dashboard'
         }
         ).catch(error => {
         })
     }
 
+
     return (
-        <Card className="w-full max-w-400 mx-auto m-16 md:m-0" square>
 
-            <CardContent className="flex flex-col items-center justify-center p-32 md:p-48 md:pt-128 ">
+        <Card className="max-w-400 mx-auto m-16 md:m-0" style = {{backgroundColor: "transparent"}} square>
 
-                <Typography variant="h6" className="text-center md:w-full mb-48">LOGIN TO YOUR ACCOUNT</Typography>
-                <form onSubmit={handleSubmit} >
-                    <TextField
+        <CardContent className="flex flex-col items-center justify-center p-32 md:p-48 md:pt-128 ">
+                <Typography variant="h6" className="text-center md:w-full mb-48">ברוך שובך</Typography>
+                <div className="w-full">
+
+                <Formsy
+                    onValidSubmit={handleSubmit}
+                    onValid={enableButton}
+                    onInvalid={disableButton}
+                    ref={formRef}
+                    className="flex flex-col justify-center w-full">
+                   
+                    <CustomTextField
                         className="mb-16"
                         type="text"
                         name="email"
-                        label="Email"
+                        label="אימייל"
                         validations={{
                             minLength: 4
                         }}
@@ -65,15 +67,12 @@ function Login() {
                         }}
                         variant="outlined"
                         required
-                        onChange={changeValue}
-                    // error={Boolean(errorMessage)}
-                    // helperText={errorMessage}
                     />
-                    <TextField
-                        className="mb-16"
-                        type="text"
+                    <CustomTextField
+                        className="pb-16"
+                        type="password"
                         name="password"
-                        label="Password"
+                        label="סיסמא"
                         validations={{
                             minLength: 4
                         }}
@@ -81,36 +80,35 @@ function Login() {
                             minLength: 'Min character length is 4'
                         }}
                         InputProps={{
-                            endAdornment: <InputAdornment position="end"><Icon className="text-20" color="action">email</Icon></InputAdornment>
+                            endAdornment: <InputAdornment position="end"><Icon className="text-20" color="action">vpn_key</Icon></InputAdornment>
                         }}
                         variant="outlined"
                         required
-                        onChange={changeValue}
-                    // error={Boolean(errorMessage)}
-                    // helperText={errorMessage}
                     />
-                    <Button
-                    onSubmit = {handleSubmit}
-                    type="submit"
-                    variant="contained"
-                    color="secondary"
-                    className="w-full mx-auto normal-case mt-16"
-                    aria-label="LOG IN"
-                    value="firebase">
-                        Log in
-                    </Button>
-                    <Button
-                                          component={Link}
-                                          to="/registration/signUp"
-                    variant="contained"
-                    color="secondary"
-                    className="w-full mx-auto normal-case mt-16"
-                    aria-label="LOG IN"
+                    <RegularButton
+                        type="submit"
+                        variant="contained"
+                        color="info"
+                        className="w-full mx-auto normal-case mt-16"
+                        aria-label="LOG IN"
+                        disabled={!isFormValid}
+                        value="firebase">
+                        כניסה
+                </RegularButton>
 
-                    value="firebase">
-                        Sign Up
-                    </Button>
-                </form>
+                </Formsy>
+                <Typography className="text-right md:w-full mt-3 ">
+                   אין לך חשבון? &nbsp; 
+                <Link
+                    variant = "body2"
+                    color="info"
+                    to="/registration/signUp"
+                    className="text-center md:w-full mt-4 "
+                >
+                    הרשם עכשיו
+                </Link>
+            </Typography>
+            </div>
             </CardContent>
         </Card>
     );

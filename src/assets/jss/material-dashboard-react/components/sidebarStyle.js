@@ -137,6 +137,23 @@ const sidebarStyle = theme => ({
     listStyle: "none",
     position: "unset"
   },
+  nested: {
+    paddingRight: "2vh",
+    ".MuiCollapse-wrapper" : {
+      display: "block"
+    }
+  },
+  expandIcon:{
+    width: "12px",
+    height: "15",
+    fontSize: "12px",
+    lineHeight: "15px",
+    float: "left",
+    marginRight: "15px",
+    textAlign: "center",
+    verticalAlign: "middle",
+    color: "rgba(" + hexToRgb(whiteColor) + ", 0.8)"
+  },
   item: {
     position: "relative",
     display: "block",

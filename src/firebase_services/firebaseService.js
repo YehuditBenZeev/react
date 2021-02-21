@@ -4,6 +4,18 @@ import 'firebase/auth';
 import 'firebase/database';
 import 'firebase/firestore';
 
+// get user category data
+function getDataByCategory(category, data, user){
+    if(category == "category1")
+        return user.category1[data];
+    else if(category == "category2")
+        return user.category2[data];
+    else if(category == "category3")
+        return user.category3[data];
+    else if(category == "category4")
+        return user.category4[data];
+}
+
 class FirebaseService {
     init(success) {
         if (firebase.apps.length) {
@@ -116,13 +128,18 @@ class FirebaseService {
     //get words by category
     getWordsByCategory = (category) => {
         return new Promise((resolve, reject) => {
-            this.db.collection('words').doc(category).get().then((word) => {
+            this.db.collection("words").doc(category).get().then((word) => {
                 resolve(word.data());
             }).catch((error) => {
                 reject(error)
             })
         })
-    };
+    }
+
+    //get holding word index by category for specific user
+    getHoldingWordsByCategoryForUser = (category) => {
+        return getDataByCategory(category, "holdingWord", this.user);
+    }
 
     generateUserDocument = async (user, additionalData) => {
         if (!user) return;
@@ -148,6 +165,7 @@ class FirebaseService {
         if (!uid) return null;
         try {
           const userDocument = await this.db.collection('users').doc(uid).get();
+          this.user = userDocument.data();
           return {
             uid,
             ...userDocument.data()

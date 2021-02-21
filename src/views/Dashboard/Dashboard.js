@@ -38,7 +38,6 @@ const useStyles = makeStyles(styles);
 
 export default function Dashboard(props) {
   const user = useContext(UserContext);
-  console.log(user);
   const classes = useStyles();
   return (
     <div>

@@ -44,7 +44,7 @@ export default function NavbarLinks() {
   return (
     <div>
       <Button
-        color={window.innerWidth > 959 ? "transparent" : "white"}
+        color="transparent"
         justIcon={window.innerWidth > 959}
         simple={!(window.innerWidth > 959)}
         aria-label="Dashboard"
@@ -58,7 +58,7 @@ export default function NavbarLinks() {
       </Button>
       <div className={classes.manager}>
         <Button
-          color={window.innerWidth > 959 ? "transparent" : "white"}
+          color="transparent"
           justIcon={window.innerWidth > 959}
           simple={!(window.innerWidth > 959)}
           aria-label="Person"
@@ -68,9 +68,6 @@ export default function NavbarLinks() {
           onClick={handleToggle}
         >
           <Person className={classes.icons} />
-          <Hidden mdUp implementation="css">
-            <p className={classes.linkText}>פרופיל</p>
-          </Hidden>
         </Button>
         <Poppers
           open={Boolean(open)}

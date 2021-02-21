@@ -9,10 +9,11 @@ import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import Collapse from '@material-ui/core/Collapse';
-import NavbarLinks from "components/Navbars/NavbarLinks.js";
-import ExpandLess from '@material-ui/icons/ExpandLess';
-import ExpandMore from '@material-ui/icons/ExpandMore';
+import subRoutes from '../../routes/categoryRoutes'
+import history from '_history';
+import firebaseService from '../../firebase_services/firebaseService'
 import styles from "assets/jss/material-dashboard-react/components/sidebarStyle.js";
+import { Person } from "@material-ui/icons";
 
 const useStyles = makeStyles(styles);
 
@@ -44,13 +45,33 @@ export default function Sidebar(props) {
     </div>
   );
 
+  const handleLogOut = () => {
+    history.push({
+      pathname: '/'
+    });
+    firebaseService.signOut();
+  }
+
+  function getCategoeryByPath(path) {
+    switch (path) {
+      case '/begginers':
+        return 'category1';
+      case '/students':
+        return 'categoery2';
+      case '/advanced':
+        return 'category3';
+      case '/buisness':
+        return 'category4'
+    }
+  }
+
 
   var links = (
     <List className={classes.list}>
       {routes.map((prop, key) => {
         var activePro = " ";
         var listItemClasses;
-        var hasChildren = prop.children != undefined;
+        var hasChildren = prop.children;
         listItemClasses = classNames({
           [" " + classes[color]]: activeRoute(prop.layout + prop.path)
         });
@@ -75,24 +96,23 @@ export default function Sidebar(props) {
                 className={classNames(classes.itemText, whiteFontClasses, {
                   [classes.itemTextRTL]: true
                 })}
-                disableTypog
-                raphy={true}
+                disableTypography={true}
               />
             </ListItem>
             {hasChildren ? <Collapse in={open[key]} timeout="auto" unmountOnExit>
               <List className={classes.nested}>
-                {prop.children.map((child, childKey) => {
+                {subRoutes.map((child, childKey) => {
                   var activePro = " ";
                   var listItemClasses;
                   listItemClasses = classNames({
-                    [" " + classes[color]]: activeRoute(child.layout + child.path)
+                    [" " + classes[color]]: activeRoute(child.layout + prop.path + child.path)
                   });
                   const whiteFontClasses = classNames({
-                    [" " + classes.whiteFont]: activeRoute(child.layout + child.path)
+                    [" " + classes.whiteFont]: activeRoute(child.layout + prop.path + child.path)
                   });
                   return (
                     <NavLink
-                      to={child.layout + child.path}
+                      to={{ pathname: child.layout + prop.path + child.path, state: getCategoeryByPath(prop.path) }}
                       className={activePro + classes.item}
                       activeClassName="active"
                       key={childKey}
@@ -118,7 +138,8 @@ export default function Sidebar(props) {
             </Collapse> : null}
           </NavLink>
         );
-      })}
+      }
+      )}
     </List>
   );
   var brand = (
@@ -128,6 +149,35 @@ export default function Sidebar(props) {
       })}>{logoText}</b>
 
     </div>
+  );
+
+  var logOut = (
+    <NavLink
+      to="/registration/login"
+      className={" " + classes.item}
+      key={props.routes.length + 1}
+    >
+      <ListItem button className={classes.itemLink + classNames({
+        [" " + classes[color]]: activeRoute("/registration/login")
+      })} onClick={() => handleLogOut()}>
+        <Person
+          className={classNames(classes.itemIcon, classNames({
+            [" " + classes.whiteFont]: activeRoute("/registration/login")
+          }), {
+            [classes.itemIconRTL]: true
+          })}
+        />
+        <ListItemText
+          primary="יציאה"
+          className={classNames(classes.itemText, classNames({
+            [" " + classes.whiteFont]: activeRoute("/")
+          }), {
+            [classes.itemTextRTL]: true
+          })}
+          disableTypography={true}
+        />
+      </ListItem>
+    </NavLink>
   );
 
   return (
@@ -149,8 +199,8 @@ export default function Sidebar(props) {
         >
           {brand}
           <div className={classes.sidebarWrapper}>
-            {<NavbarLinks />}
             {links}
+            {logOut}
           </div>
           {image !== undefined ? (
             <div
@@ -193,5 +243,5 @@ Sidebar.propTypes = {
   image: PropTypes.string,
   logoText: PropTypes.string,
   routes: PropTypes.arrayOf(PropTypes.object),
-  open: true
+  open: PropTypes.bool
 };

@@ -10,7 +10,7 @@ class LearnWords extends Component {
    
     componentDidMount() {
         var list;
-        firebaseService.getWordsByCategory(this.props.category)
+        firebaseService.getWordsByCategory(this.props.location.state)
         .then(function(list_words) {
             list = list_words;
         }).then(() => {

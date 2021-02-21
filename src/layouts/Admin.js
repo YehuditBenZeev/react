@@ -6,7 +6,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import Navbar from "components/Navbars/Navbar.js";
 import Footer from "components/Footer/Footer.js";
 import Sidebar from "components/Sidebar/Sidebar.js";
-import routes from "routes.js";
+import routes from "../routes/routes.js";
+import subRoutes from '../routes/categoryRoutes'
 import styles from "assets/jss/material-dashboard-react/layouts/rtlStyle.js";
 import bgImage from "assets/img/sidebar-2.jpg";
 import logo from "assets/img/reactlogo.png";
@@ -16,13 +17,28 @@ let ps;
 const switchRoutes = (
   <Switch>
     {routes.map((prop, key) => {
+      if(prop.children){
+              return  <Switch>  {
+          subRoutes.map((child, childKey) => {
+            return (
+              <Route
+                path={child.layout + "/begginers"+ child.path}
+                component={child.component}
+                key={childKey}
+              />
+            );
+          })
+        }
+        </Switch> 
+      }
+      else
         return (
-          <Route
-            path={prop.layout + prop.path}
-            component={prop.component}
-            key={key}
-          />
-        );
+        <Route
+          path={prop.layout + prop.path}
+          component={prop.component}
+          key={key}
+        />
+      );
 
     })}
   </Switch>
@@ -90,20 +106,22 @@ export default function Admin({ ...rest }) {
         handleDrawerToggle={handleDrawerToggle}
         open={mobileOpen}
         color={color}
+        rtlActive={true}
         {...rest}
       />
-      <div className={classes.mainPanel} ref={mainPanel}>
+      <div className={classes.mainPanel} ref={mainPanel} dir="rtl">
         <Navbar
           routes={routes}
           handleDrawerToggle={handleDrawerToggle}
+          rtlActive={true}
           {...rest}
         />
-        
-          <div className={classes.content}>
-            <div className={classes.container}>{switchRoutes}</div>
-          </div>
 
-        <Footer /> 
+        <div className={classes.content}>
+          <div className={classes.container}>{switchRoutes}</div>
+        </div>
+
+        <Footer />
 
       </div>
     </div>

@@ -56,8 +56,8 @@ const sidebarStyle = theme => ({
       right: "0 !important"
     },
     [theme.breakpoints.down("sm")]: {
-      left: "0  !important",
-      right: "auto !important"
+      left: "auto  !important",
+      right: "0 !important"
     }
   },
   logo: {

@@ -2,7 +2,7 @@ import React from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
 import "perfect-scrollbar/css/perfect-scrollbar.css";
 import { makeStyles } from "@material-ui/core/styles";
-import routes from "registerRoute.js";
+import routes from "../routes/registerRoute.js";
 import styles from "assets/jss/material-dashboard-react/layouts/registerStyle.js";
 import bgImage from "assets/img/sidebar-2.jpg";
 

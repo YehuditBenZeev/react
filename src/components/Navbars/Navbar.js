@@ -34,17 +34,10 @@ export default function Header(props) {
     [" " + classes[color]]: color
   });
   return (
+    <div dir="rtl">
     <AppBar className={classes.appBar + appBarClasses}>
       <Toolbar className={classes.container}>
-        <div className={classes.flex}>
-          <Button color="transparent" href="#" className={classes.title}>
-            {makeBrand()}
-          </Button>
-        </div>
-        <Hidden smDown implementation="css">
-          <NavbarLinks />
-        </Hidden>
-        <Hidden mdUp implementation="css">
+      <Hidden mdUp implementation="css">
           <IconButton
             color="inherit"
             aria-label="open drawer"
@@ -53,14 +46,24 @@ export default function Header(props) {
             <Menu />
           </IconButton>
         </Hidden>
+        <div className={classes.flex}>
+          <Button color="transparent" href="#" className={classes.title}>
+            {makeBrand()}
+          </Button>
+        </div>
+        
+        <Hidden smDown implementation="css">
+          <NavbarLinks />
+        </Hidden>
       </Toolbar>
     </AppBar>
+    </div>
   );
 }
 
 Header.propTypes = {
   color: PropTypes.oneOf(["primary", "info", "success", "warning", "danger"]),
-  rtlActive: true,
+  rtlActive: PropTypes.bool,
   handleDrawerToggle: PropTypes.func,
   routes: PropTypes.arrayOf(PropTypes.object)
 };

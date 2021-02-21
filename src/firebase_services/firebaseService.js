@@ -16,7 +16,6 @@ class FirebaseService {
     }
 
     UserSignUp = (userDetails) => {
-        console.log(userDetails);
         const { email, password, username } = userDetails;
         return new Promise((res, rej) => {
             this.auth && this.auth.createUserWithEmailAndPassword(email, password).then(
@@ -89,6 +88,12 @@ class FirebaseService {
             })
         })
     }
+    signOut = () => {
+		if (!this.auth) {
+			return;
+		}
+		this.auth.signOut();
+	};
 
     getUserData = (uid) => {
         return new Promise((resolve, reject) => {
@@ -118,6 +123,39 @@ class FirebaseService {
             })
         })
     };
+
+    generateUserDocument = async (user, additionalData) => {
+        if (!user) return;
+        const userRef = this.db.collection('users').doc(user.uid);
+        const snapshot = await userRef.get();
+        if (!snapshot.exists) {
+          const { email, displayName, photoURL } = user;
+          try {
+            await userRef.set({
+              displayName,
+              email,
+              photoURL,
+              ...additionalData
+            });
+          } catch (error) {
+            console.error("Error creating user document", error);
+          }
+        }
+        return this.getUserDocument(user.uid);
+      };
+      
+      getUserDocument = async uid => {
+        if (!uid) return null;
+        try {
+          const userDocument = await this.db.collection('users').doc(uid).get();
+          return {
+            uid,
+            ...userDocument.data()
+          };
+        } catch (error) {
+          console.error("Error fetching user", error);
+        }
+      };
 
 }
 

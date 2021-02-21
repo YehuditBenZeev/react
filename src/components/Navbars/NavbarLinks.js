@@ -13,6 +13,8 @@ import Person from "@material-ui/icons/Person";
 import Dashboard from "@material-ui/icons/Dashboard";
 import Button from "components/CustomButtons/Button.js";
 import Admin from 'layouts/Admin';
+import history from '_history';
+import firebaseService from '../../firebase_services/firebaseService'
 import styles from "assets/jss/material-dashboard-react/components/rtlHeaderLinksStyle.js";
 
 const useStyles = makeStyles(styles);
@@ -31,6 +33,13 @@ export default function NavbarLinks() {
   const handleClose = () => {
     setOpen(null);
   };
+
+  const handleLogOut = () => {
+    history.push({
+			pathname: '/'
+		});
+    firebaseService.signOut();
+  }
 
   return (
     <div>
@@ -86,10 +95,10 @@ export default function NavbarLinks() {
               <Paper>
                 <ClickAwayListener onClickAway={handleClose}>
                   <MenuList role="menu">
-                    <MenuItem
+                    <MenuItem 
                       component={Link}
-                      to="/registration/login"
-                      onClick={handleClose}
+                      to="/"
+                      onClick={handleLogOut}
                       className={classes.dropdownItem}
                     >
                       יציאה

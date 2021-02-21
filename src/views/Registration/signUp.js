@@ -25,10 +25,7 @@ function SignUp() {
 
     function handleSubmit(model) {
         firebaseService.UserSignUp(model).then((value) => {
-            ReactDOM.render(
-                <Router history={createBrowserHistory()}><Route path="/admin" component={Admin} /></Router>
-                , document.getElementById("root"))
-            window.location.href = '/admin/dashboard'
+            window.location.href = '/'
         }
         ).catch(error => {
         })

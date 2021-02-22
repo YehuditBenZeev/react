@@ -7,8 +7,6 @@ import CardActions from '@material-ui/core/CardActions';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import { IconButton } from '@material-ui/core';
-import { UserContext } from "../../userProvider";
-import { useContext } from "react";
 
 
 // get map size

@@ -58,7 +58,7 @@ class LearnWords extends Component {
             this.setState({wordsLength: size});
             
             // to show the word that the user is holding on
-            var holdingWord = firebaseService.getHoldingWordsByCategoryForUser(this.props.category);
+            var holdingWord = firebaseService.getHoldingWordsByCategoryForUser(this.props.location.state);
             this.setState({count: holdingWord});
             // disable previous or next buttons if needed
             //first word - could not press previous now

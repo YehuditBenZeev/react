@@ -9,7 +9,7 @@ import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import Collapse from '@material-ui/core/Collapse';
-import subRoutes from '../../routes/categoryRoutes'
+import {categoryRoutes} from '../../routes/categoryRoutes'
 import history from '_history';
 import firebaseService from '../../firebase_services/firebaseService'
 import styles from "assets/jss/material-dashboard-react/components/sidebarStyle.js";
@@ -57,11 +57,11 @@ export default function Sidebar(props) {
       case '/begginers':
         return 'category1';
       case '/students':
-        return 'categoery2';
+        return 'category2';
       case '/advanced':
         return 'category3';
       case '/buisness':
-        return 'category4'
+        return 'category4';
     }
   }
 
@@ -101,7 +101,8 @@ export default function Sidebar(props) {
             </ListItem>
             {hasChildren ? <Collapse in={open[key]} timeout="auto" unmountOnExit>
               <List className={classes.nested}>
-                {subRoutes.map((child, childKey) => {
+                {categoryRoutes.map((child, childKey) => {
+                  // console.log(child.layout + prop.path + child.path, getCategoeryByPath(prop.path));
                   var activePro = " ";
                   var listItemClasses;
                   listItemClasses = classNames({

@@ -3,7 +3,7 @@ import React from "react";
 import LearnWords from 'views/LearnWords/LearnWords';
 
 
-function Begginers(){
+function Begginers(props){
     return (
         <Card>
             <LearnWords category='category1'/>      

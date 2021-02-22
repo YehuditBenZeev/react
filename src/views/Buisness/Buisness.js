@@ -8,7 +8,7 @@ function Buisness() {
 
     return (
         <Card>
-            <StoryPage category='category2'/>      
+            <StoryPage category='category1'/>      
         </Card>
     )
 

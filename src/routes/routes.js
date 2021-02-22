@@ -1,7 +1,6 @@
 import Dashboard from "@material-ui/icons/Dashboard";
-import Person from "@material-ui/icons/Person";
+import Assignment from "@material-ui/icons/Assignment";
 import DashboardPage from "views/Dashboard/Dashboard.js";
-import UserProfile from "views/UserProfile/UserProfile.js";
 import Buisness from "views/Buisness/Buisness.js";
 import Students from "views/Students/Students.js";
 import Advanced from "views/Advanced/Advanced.js";
@@ -19,39 +18,38 @@ const dashboardRoutes = [
   {
     path: "/begginers",
     name: "אנגלית למתחילים",
-    icon: Dashboard,
+    icon: Assignment,
     component: Begginers,
-    layout: "/admin"
+    layout: "/admin",
+    children: true
   },
   {
     path: "/students",
     name: "אנגלית לתלמידים",
-    icon: Dashboard,
+    icon: Assignment,
     component: Students,
-    layout: "/admin"
+    layout: "/admin",
+    children: true
   },
   {
     path: "/advanced",
     name: "אנגלית למתקדמים",
-    icon: Dashboard,
+    icon: Assignment,
     component: Advanced,
-    layout: "/admin"
+    layout: "/admin",
+    children: true
   },
   {
     path: "/buisness",
     name: "אנגלית לעסקים",
-    icon: Person,
+    icon: Assignment,
     component: Buisness,
-    layout: "/admin"
-  },
-  {
-    path: "/user",
-    name: "פרופיל משתמש",
-    icon: Dashboard,
-    component: UserProfile,
-    layout: "/admin"
+    layout: "/admin",
+    children: true
   },
 ];
+
+
 
 
 export default dashboardRoutes;

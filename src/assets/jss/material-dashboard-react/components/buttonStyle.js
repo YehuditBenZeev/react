@@ -271,6 +271,7 @@ const buttonStyle = {
     }
   },
   disabled: {
+    backgroundColor: grayColor[0],
     opacity: "0.65",
     pointerEvents: "none"
   },

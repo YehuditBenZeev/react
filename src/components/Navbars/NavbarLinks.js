@@ -13,6 +13,8 @@ import Person from "@material-ui/icons/Person";
 import Dashboard from "@material-ui/icons/Dashboard";
 import Button from "components/CustomButtons/Button.js";
 import Admin from 'layouts/Admin';
+import history from '_history';
+import firebaseService from '../../firebase_services/firebaseService'
 import styles from "assets/jss/material-dashboard-react/components/rtlHeaderLinksStyle.js";
 
 const useStyles = makeStyles(styles);
@@ -32,10 +34,17 @@ export default function NavbarLinks() {
     setOpen(null);
   };
 
+  const handleLogOut = () => {
+    history.push({
+			pathname: '/'
+		});
+    firebaseService.signOut();
+  }
+
   return (
     <div>
       <Button
-        color={window.innerWidth > 959 ? "transparent" : "white"}
+        color="transparent"
         justIcon={window.innerWidth > 959}
         simple={!(window.innerWidth > 959)}
         aria-label="Dashboard"
@@ -49,7 +58,7 @@ export default function NavbarLinks() {
       </Button>
       <div className={classes.manager}>
         <Button
-          color={window.innerWidth > 959 ? "transparent" : "white"}
+          color="transparent"
           justIcon={window.innerWidth > 959}
           simple={!(window.innerWidth > 959)}
           aria-label="Person"
@@ -59,9 +68,6 @@ export default function NavbarLinks() {
           onClick={handleToggle}
         >
           <Person className={classes.icons} />
-          <Hidden mdUp implementation="css">
-            <p className={classes.linkText}>פרופיל</p>
-          </Hidden>
         </Button>
         <Poppers
           open={Boolean(open)}
@@ -86,18 +92,10 @@ export default function NavbarLinks() {
               <Paper>
                 <ClickAwayListener onClickAway={handleClose}>
                   <MenuList role="menu">
-                    <MenuItem
+                    <MenuItem 
                       component={Link}
-                      to="/admin/user"
-                      onClick={handleClose}
-                      className={classes.dropdownItem}
-                    >
-                      הגדרות
-                    </MenuItem>
-                    <MenuItem
-                      component={Link}
-                      to="/registration/login"
-                      onClick={handleClose}
+                      to="/"
+                      onClick={handleLogOut}
                       className={classes.dropdownItem}
                     >
                       יציאה

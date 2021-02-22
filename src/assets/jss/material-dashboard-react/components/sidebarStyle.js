@@ -56,8 +56,8 @@ const sidebarStyle = theme => ({
       right: "0 !important"
     },
     [theme.breakpoints.down("sm")]: {
-      left: "0  !important",
-      right: "auto !important"
+      left: "auto  !important",
+      right: "0 !important"
     }
   },
   logo: {
@@ -136,6 +136,23 @@ const sidebarStyle = theme => ({
     marginBottom: "0",
     listStyle: "none",
     position: "unset"
+  },
+  nested: {
+    paddingRight: "2vh",
+    ".MuiCollapse-wrapper" : {
+      display: "block"
+    }
+  },
+  expandIcon:{
+    width: "12px",
+    height: "15",
+    fontSize: "12px",
+    lineHeight: "15px",
+    float: "left",
+    marginRight: "15px",
+    textAlign: "center",
+    verticalAlign: "middle",
+    color: "rgba(" + hexToRgb(whiteColor) + ", 0.8)"
   },
   item: {
     position: "relative",

@@ -1,81 +1,73 @@
 import React from "react";
-import classNames from "classnames";
-import PropTypes from "prop-types";
-// @material-ui/core components
-import { makeStyles } from "@material-ui/core/styles";
-import FormControl from "@material-ui/core/FormControl";
-import InputLabel from "@material-ui/core/InputLabel";
-import Input from "@material-ui/core/Input";
-// @material-ui/icons
-import Clear from "@material-ui/icons/Clear";
-import Check from "@material-ui/icons/Check";
-// core components
-import styles from "assets/jss/material-dashboard-react/components/customInputStyle.js";
+import TextField from '@material-ui/core/TextField';
+import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
+import { withFormsy } from 'formsy-react';
+import { lightBlue, red } from '@material-ui/core/colors';
+import {
+  grayColor,
+  primaryColor,
+  infoColor,
+  successColor,
+  warningColor,
+  dangerColor,
+  roseColor,
+  whiteColor,
+  blackColor,
+  hexToRgb
+} from "assets/jss/material-dashboard-react.js";
 
-const useStyles = makeStyles(styles);
+const theme = createMuiTheme({
+  direction: 'rtl',
+  palette: {
+    primary: {
+      light: infoColor[2],
+      main: infoColor[2],
+      dark: infoColor[2],
+      contrastText: 'transparent',
+    },
+    error: red
+  },
+});
 
-export default function CustomInput(props) {
-  const classes = useStyles();
-  const {
-    formControlProps,
-    labelText,
-    id,
-    labelProps,
-    inputProps,
-    error,
-    success
-  } = props;
 
-  const labelClasses = classNames({
-    [" " + classes.labelRootError]: error,
-    [" " + classes.labelRootSuccess]: success && !error
-  });
-  const underlineClasses = classNames({
-    [classes.underlineError]: error,
-    [classes.underlineSuccess]: success && !error,
-    [classes.underline]: true
-  });
-  const marginTop = classNames({
-    [classes.marginTop]: labelText === undefined
-  });
+function CustomTextField(props) {
+  let { value, errorMessage, className, type, name, label, validations, validationErrors, InputProps, variant, required } = props;
+  if(value == undefined) value = '';
+
+  function changeValue(event) {
+    props.setValue(event.currentTarget.value);
+    if (props.onChange) {
+      props.onChange(event);
+    }
+  }
+
   return (
-    <FormControl
-      {...formControlProps}
-      className={formControlProps.className + " " + classes.formControl}
-    >
-      {labelText !== undefined ? (
-        <InputLabel
-          className={classes.labelRoot + labelClasses}
-          htmlFor={id}
-          {...labelProps}
-        >
-          {labelText}
-        </InputLabel>
-      ) : null}
-      <Input
-        classes={{
-          root: marginTop,
-          disabled: classes.disabled,
-          underline: underlineClasses
-        }}
-        id={id}
-        {...inputProps}
-      />
-      {error ? (
-        <Clear className={classes.feedback + " " + classes.labelRootError} />
-      ) : success ? (
-        <Check className={classes.feedback + " " + classes.labelRootSuccess} />
-      ) : null}
-    </FormControl>
+    <ThemeProvider theme={theme}>
+      <div dir="rtl">
+        <TextField
+          margin='normal'
+          className={className}
+          type={type}
+          name={name}
+          label={label}
+          validations={{
+            minLength: 4
+          }}
+          // validationErrors={validationErrors}
+          InputProps={InputProps}
+          variant={variant}
+          {...required}
+          onChange={changeValue}
+          value={value}
+          error={Boolean(errorMessage)}
+          helperText={errorMessage}
+        />
+      </div>
+    </ThemeProvider>
   );
-}
 
-CustomInput.propTypes = {
-  labelText: PropTypes.node,
-  labelProps: PropTypes.object,
-  id: PropTypes.string,
-  inputProps: PropTypes.object,
-  formControlProps: PropTypes.object,
-  error: PropTypes.bool,
-  success: PropTypes.bool
-};
+}
+export default React.memo(withFormsy(CustomTextField));
+
+
+

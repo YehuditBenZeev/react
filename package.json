@@ -12,10 +12,9 @@
     "chartist": "0.10.1",
     "classnames": "2.2.6",
     "firebase": "^8.2.5",
+    "formsy-react": "^2.2.3",
     "history": "4.10.1",
-    "pdf.js": "^0.1.0",
-    "pdfjs": "^2.4.2",
-    "pdfjs-dist": "^2.6.347",
+    "jss-rtl": "^0.3.0",
     "perfect-scrollbar": "1.5.0",
     "prop-types": "15.7.2",
     "react": "^17.0.1",
@@ -41,7 +40,7 @@
   },
   "browserslist": {
     "production": [
-      "0.2%",
+      ">0.2%",
       "not dead",
       "not op_mini all"
     ],

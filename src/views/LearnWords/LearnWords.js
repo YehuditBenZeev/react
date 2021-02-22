@@ -7,9 +7,6 @@ import CardActions from '@material-ui/core/CardActions';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import { IconButton } from '@material-ui/core';
-import { UserContext } from "../../userProvider";
-import { useContext } from "react";
-
 
 // get map size
 function getMapSize(x) {
@@ -26,14 +23,10 @@ function sortMapByKey(o) {
 }
 
 // this componnent is a layout for the Learn Words page
-// in order to show the data by catagory it's used like this:
-// <LearnWords category='category1'/>
 class LearnWords extends Component {
 
     constructor() {
         super();
-        //this.user = useContext(UserContext);
-
         this.state = {
             words: {},
             count: 0,
@@ -44,7 +37,6 @@ class LearnWords extends Component {
         this.handleNext = this.handleNext.bind(this);
         this.handlePrevious = this.handlePrevious.bind(this);
     }
-    
    
     componentDidMount() {
         var list;
@@ -57,7 +49,7 @@ class LearnWords extends Component {
             this.setState({wordsLength: size});
             
             // to show the word that the user is holding on
-            var holdingWord = firebaseService.getHoldingWordsByCategoryForUser(this.props.category);
+            var holdingWord = firebaseService.getHoldingWordsByCategoryForUser(this.props.location.state);
             this.setState({count: holdingWord});
             // disable previous or next buttons if needed
             //first word - could not press previous now
@@ -66,7 +58,7 @@ class LearnWords extends Component {
             }
             //last word - could not press next anymore
             if(this.state.count == this.state.wordsLength - 1){
-                this.setState({previousDisabled: true});
+                this.setState({nextDisabled: true});
             }
         })
     }
@@ -135,10 +127,8 @@ class LearnWords extends Component {
                     </div>
                 </Card>
             </div>
-           
           );
       }
   }
-
 
 export default LearnWords

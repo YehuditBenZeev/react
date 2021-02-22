@@ -59,7 +59,7 @@ class LearnWords extends Component {
             }
             //last word - could not press next anymore
             if(this.state.count == this.state.wordsLength - 1){
-                this.setState({previousDisabled: true});
+                this.setState({nextDisabled: true});
             }
         })
     }

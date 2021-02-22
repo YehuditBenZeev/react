@@ -11,7 +11,6 @@ import { UserContext } from "../../userProvider";
 import { useContext } from "react";
 
 
-
 // get map size
 function getMapSize(x) {
     var len = 0;
@@ -27,14 +26,10 @@ function sortMapByKey(o) {
 }
 
 // this componnent is a layout for the Learn Words page
-// in order to show the data by catagory it's used like this:
-// <LearnWords category='category1'/>
 class LearnWords extends Component {
 
     constructor() {
         super();
-        //this.user = useContext(UserContext);
-
         this.state = {
             words: {},
             count: 0,
@@ -45,7 +40,6 @@ class LearnWords extends Component {
         this.handleNext = this.handleNext.bind(this);
         this.handlePrevious = this.handlePrevious.bind(this);
     }
-    
    
     componentDidMount() {
         var list;
@@ -136,10 +130,8 @@ class LearnWords extends Component {
                     </div>
                 </Card>
             </div>
-           
           );
       }
   }
-
 
 export default LearnWords

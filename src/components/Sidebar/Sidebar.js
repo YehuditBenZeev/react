@@ -57,7 +57,7 @@ export default function Sidebar(props) {
       case '/begginers':
         return 'category1';
       case '/students':
-        return 'categoery2';
+        return 'category2';
       case '/advanced':
         return 'category3';
       case '/buisness':

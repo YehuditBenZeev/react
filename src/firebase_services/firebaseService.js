@@ -152,7 +152,7 @@ class FirebaseService {
 
     //get holding word index by category for specific user
     getHoldingWordsByCategoryForUser = (category) => {
-        return getDataByCategory(category, "holdingWord", this.user);
+        return getDataByCategory(category, "holdingWords", this.user);
     }
 
     generateUserDocument = async (user, additionalData) => {

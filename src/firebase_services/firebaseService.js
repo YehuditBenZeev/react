@@ -116,9 +116,24 @@ class FirebaseService {
                 reject(error)
             })
         })
+    }
+
+    //get story links by category
+    getStoryByCategory = (category) => {
+        return new Promise((resolve, reject) => {
+            this.db.collection('stories').doc(category).get().then((story) => {
+                console.log("getStoryByCategory")
+                console.log(story);
+                console.log(story.data());
+                resolve(story.data().stories);
+            }).catch((error) => {
+                reject(error)
+            })
+        })
     };
 
 }
+
 
 const instance = new FirebaseService();
 

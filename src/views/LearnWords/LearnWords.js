@@ -7,6 +7,7 @@ import CardActions from '@material-ui/core/CardActions';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import { IconButton } from '@material-ui/core';
+import SettingsVoiceIcon from '@material-ui/icons/SettingsVoice';
 
 // get map size
 function getMapSize(x) {
@@ -36,6 +37,8 @@ class LearnWords extends Component {
         };
         this.handleNext = this.handleNext.bind(this);
         this.handlePrevious = this.handlePrevious.bind(this);
+        this.play = this.play.bind(this);
+
     }
    
     componentDidMount() {
@@ -49,10 +52,9 @@ class LearnWords extends Component {
             firebaseService.getHoldingWordsByCategoryForUser(this.props.location.state)
             .then(function(count) {
                 holdingWord = count;
-            }).then(() => {
+            })
+            .then(() => {
                 // to show the word that the user is holding on
-                //holdingWord = firebaseService.getHoldingWordsByCategoryForUser(this.props.location.state);
-                console.log("aaa: " + holdingWord);
                 this.setState({count: holdingWord});
                 // disable previous or next buttons if needed
                 //first word - could not press previous now
@@ -84,7 +86,6 @@ class LearnWords extends Component {
             var previous  = this.state.count -1;
             firebaseService.setHoldingWordsByCategoryForUser(this.props.location.state, previous)
             this.setState({count: previous});
-            console.log("count: " + previous);
         }
     }
 
@@ -103,8 +104,15 @@ class LearnWords extends Component {
             var next  = this.state.count + 1;
             this.setState({count: next});
             firebaseService.setHoldingWordsByCategoryForUser(this.props.location.state, next)
-            console.log("count: " + next);
         }
+    }
+
+    // continue to next word
+    play(event) {
+        event.preventDefault();
+        var u = new SpeechSynthesisUtterance(Object.keys(this.state.words)[this.state.count])
+        u.lang = 'en-GB';
+        speechSynthesis.speak(u);
     }
 
     render() {  
@@ -118,17 +126,18 @@ class LearnWords extends Component {
                 <h2>לימוד מילים</h2>
                 <Card style={styles}>
                     <div className="content" style={styles}>
+                        <CardActions style={styles}><IconButton>
+                        <SettingsVoiceIcon size="large" onClick={this.play}>
+                        </SettingsVoiceIcon></IconButton>
+                        </CardActions>
                         {  
                             <h3>    
-                                {"מילה: "}
-                                <Speech text={Object.keys(this.state.words)[this.state.count]}
-                                        voice="Google UK English Female" 
-                                        textAsButton={true}/>
+                                {"מילה: " + Object.keys(this.state.words)[this.state.count]}       
                                 <br />
                                 {"תרגום: " + this.state.words[Object.keys(this.state.words)[this.state.count]]} 
                             </h3>
                         }
-                        <CardActions style={styles}>
+                        <CardActions>
                             <IconButton id="previous" aria-label="add an arrow" onClick={this.handlePrevious} disabled={this.state.previousDisabled}>
                                 <ArrowForwardIosIcon size="large"/>
                             </IconButton>

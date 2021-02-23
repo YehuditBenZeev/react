@@ -1,7 +1,6 @@
 import React from "react";
 import firebaseService from 'firebase_services/firebaseService';
 import {Component} from 'react';
-import Speech from 'react-speech';
 import { Card } from '@material-ui/core';
 import CardActions from '@material-ui/core/CardActions';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';

@@ -152,17 +152,51 @@ class FirebaseService {
 
     //get holding word index by category for specific user
     getHoldingWordsByCategoryForUser = (category) => {
-        return getDataByCategory(category, "holdingWords", this.user);
+        return new Promise((resolve, reject) => {
+            this.db.collection('users').doc(this.uid).get().then((user) => {
+                resolve(getDataByCategory(category, "holdingWords", user.data()));
+            }).catch((error) => {
+                reject(error)
+            })
+        })
+    }
+
+    //set holding word index by category for specific user
+    setHoldingWordsByCategoryForUser = async (category, newValue) => {
+        if(category == "category1")
+            await this.userRef.set({
+                category1: {
+                    holdingWords: newValue,
+                }
+            }, { merge: true });
+        else if(category == "category2")
+            await this.userRef.set({
+                category2: {
+                    holdingWords: newValue,
+                }
+            }, { merge: true });
+        else if(category == "category3")
+            await this.userRef.set({
+                category3: {
+                    holdingWords: newValue,
+                }
+            }, { merge: true });
+        else if(category == "category4")
+            await this.userRef.set({
+                category4: {
+                    holdingWords: newValue,
+                }
+            }, { merge: true });
     }
 
     generateUserDocument = async (user, additionalData) => {
         if (!user) return;
-        const userRef = this.db.collection('users').doc(user.uid);
-        const snapshot = await userRef.get();
+        this.userRef = this.db.collection('users').doc(user.uid);
+        const snapshot = await this.userRef.get();
         if (!snapshot.exists) {
             const { email, displayName, photoURL } = user;
             try {
-                await userRef.set({
+                await this.userRef.set({
                     displayName,
                     email,
                     photoURL,
@@ -179,6 +213,7 @@ class FirebaseService {
         if (!uid) return null;
         try {
           const userDocument = await this.db.collection('users').doc(uid).get();
+          this.uid = uid;
           this.user = userDocument.data();
           return {
             uid,
@@ -193,4 +228,4 @@ class FirebaseService {
 
 const instance = new FirebaseService();
 
-export default instance;
+export default instance; 

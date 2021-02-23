@@ -40,26 +40,32 @@ class LearnWords extends Component {
    
     componentDidMount() {
         var list;
+        var holdingWord
         firebaseService.getWordsByCategory(this.props.location.state)
         .then(function(list_words) {
             list = list_words;
         }).then(() => {
             this.setState({words: sortMapByKey(list.words)});
-            var size = getMapSize(list.words);
-            this.setState({wordsLength: size});
-            
-            // to show the word that the user is holding on
-            var holdingWord = firebaseService.getHoldingWordsByCategoryForUser(this.props.location.state);
-            this.setState({count: holdingWord});
-            // disable previous or next buttons if needed
-            //first word - could not press previous now
-            if(this.state.count == 0){
-                this.setState({previousDisabled: true});
-            }
-            //last word - could not press next anymore
-            if(this.state.count == this.state.wordsLength - 1){
-                this.setState({nextDisabled: true});
-            }
+            firebaseService.getHoldingWordsByCategoryForUser(this.props.location.state)
+            .then(function(count) {
+                holdingWord = count;
+            }).then(() => {
+                // to show the word that the user is holding on
+                //holdingWord = firebaseService.getHoldingWordsByCategoryForUser(this.props.location.state);
+                console.log("aaa: " + holdingWord);
+                this.setState({count: holdingWord});
+                // disable previous or next buttons if needed
+                //first word - could not press previous now
+                if(this.state.count == 0){
+                    this.setState({previousDisabled: true});
+                }
+                //last word - could not press next anymore
+                if(this.state.count == this.state.wordsLength - 1){
+                    this.setState({nextDisabled: true});
+                }
+                //only now we will set the size, this will also indecate to show to screen
+                this.setState({wordsLength: getMapSize(list.words)});
+            })
         })
     }
 
@@ -75,7 +81,10 @@ class LearnWords extends Component {
             if (this.state.count == 1){
                 this.setState({previousDisabled: true});
             }
-            this.setState({count: this.state.count - 1});
+            var previous  = this.state.count -1;
+            firebaseService.setHoldingWordsByCategoryForUser(this.props.location.state, previous)
+            this.setState({count: previous});
+            console.log("count: " + previous);
         }
     }
 
@@ -91,7 +100,10 @@ class LearnWords extends Component {
             if (this.state.count == this.state.wordsLength - 2){
                 this.setState({nextDisabled: true});
             }
-            this.setState({count: this.state.count + 1});
+            var next  = this.state.count + 1;
+            this.setState({count: next});
+            firebaseService.setHoldingWordsByCategoryForUser(this.props.location.state, next)
+            console.log("count: " + next);
         }
     }
 

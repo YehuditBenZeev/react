@@ -155,6 +155,10 @@ class FirebaseService {
         return getDataByCategory(category, "holdingWords", this.user);
     }
 
+    //get holding story index by category for specific user
+    getHoldingStoryByCategoryForUser = (category) => {
+        return getDataByCategory(category, "holdingStory", this.user);
+    }    
 
      //get story links by category
      getStoryByCategory = (category) => {

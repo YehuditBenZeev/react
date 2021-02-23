@@ -1,15 +1,14 @@
 import { Card } from '@material-ui/core';
 import React from "react";
-//import GetPdf from 'views/Story/GetPdf';
-import StoryPage from 'views/Story/Story';
 
+
+import {SwitchCategory} from '../../routes/categoryRoutes'
+import {useRouteMatch} from "react-router-dom";
 
 function Buisness() {
-
+    let match = useRouteMatch();
     return (
-        <Card>
-            <StoryPage category='category1'/>      
-        </Card>
+        <div>{SwitchCategory(match.url)}</div>
     )
 
 }

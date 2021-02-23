@@ -1,13 +1,13 @@
 import { Card } from '@material-ui/core';
 import React from "react";
-import LearnWords from 'views/LearnWords/LearnWords';
+import {SwitchCategory} from '../../routes/categoryRoutes'
+import {useRouteMatch} from "react-router-dom";
 
 
-function Begginers(props){
+function Begginers(props) {
+    let match = useRouteMatch();
     return (
-        <Card>
-            <LearnWords category='category1'/>      
-        </Card>
+        <div>{SwitchCategory(match.url)}</div>
     )
 }
 

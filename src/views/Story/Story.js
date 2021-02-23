@@ -17,14 +17,14 @@ class StoryPage extends Component {
     componentDidMount() {
         var list;
         var story_st;
-        firebaseService.getStoryByCategory(this.props.category)
+        firebaseService.getStoryByCategory(this.props.location.state)
         .then(function(list_links) {
             list = list_links;
         }).then(() => {
             this.setState({story_links: list});
         })
 
-        firebaseService.getDataByCategory(this.props.category ,this.user)
+        firebaseService.getHoldingStoryByCategoryForUser(this.props.location.state ,this.user)
         .then(function(st){
             story_st = st;
         }).then(()=>{

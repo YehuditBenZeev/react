@@ -8,7 +8,6 @@ import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import { IconButton } from '@material-ui/core';
 
-
 // get map size
 function getMapSize(x) {
     var len = 0;
@@ -106,7 +105,7 @@ class LearnWords extends Component {
             <div className="word-container">
                 <h2>לימוד מילים</h2>
                 <Card style={styles}>
-                    <div class="content" style={styles}>
+                    <div className="content" style={styles}>
                         {  
                             <h3>    
                                 {"מילה: "}

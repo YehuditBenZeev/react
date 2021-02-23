@@ -20,8 +20,9 @@ import Typography from '@material-ui/core/Typography';
 export default function ImageCard(props) {
     //const classes = useStyles();
     var link = props.image_link;
-    console.log("image_link");
-    console.log(link);
+    var is_last = props.last;
+    // console.log("image_link");
+    // console.log(link);
 
     return (
         <Card>
@@ -34,9 +35,14 @@ export default function ImageCard(props) {
                 />
             </CardActionArea>
             <CardActions>
-              <Button size="small" color="primary">
-                finished to read
-              </Button>
+              <div id="story_buttons">
+                <Button size="small" color="primary" >
+                  סימתי לקרוא    
+                </Button>
+                <Button size="small" color="primary" >
+                  {is_last? " סיפור הבא" : "חזור לסיפור הראשון"}
+                </Button>
+              </div>
     
             </CardActions>
         </Card>

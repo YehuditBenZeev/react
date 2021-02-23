@@ -14,6 +14,8 @@ function getMapSize(x) {
     for (var count in x) {
             len++;
     }
+    console.log("len ,", len, x);
+
     return len;
 }
 

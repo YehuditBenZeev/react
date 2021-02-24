@@ -5,6 +5,7 @@ import School from "@material-ui/icons/School";
 import Begginers from "views/Begginers/Begginers.js";
 import LearnWords from "views/LearnWords/LearnWords";
 import Test from "views/Test/Test";
+import Story from "views/Story/Story";
 
 import {
   Switch, Route, useRouteMatch,
@@ -24,7 +25,7 @@ const categoryRoutes = [
       path: "/story",
       name: "סיפור",
       icon: InsertDriveFile,
-      component: Begginers,
+      component: Story,
       layout: "/admin"
     },
     {

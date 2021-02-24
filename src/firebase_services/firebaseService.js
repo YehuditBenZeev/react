@@ -189,6 +189,69 @@ class FirebaseService {
             }, { merge: true });
     }
 
+    //set holding Story index by category for specific user
+    setHoldingStoryByCategoryForUser = async (category, newValue) => {
+        if(category == "category1")
+            await this.userRef.set({
+                category1: {
+                    holdingStory: newValue,
+                }
+            }, { merge: true });
+        else if(category == "category2")
+            await this.userRef.set({
+                category2: {
+                    holdingStory: newValue,
+                }
+            }, { merge: true });
+        else if(category == "category3")
+            await this.userRef.set({
+                category3: {
+                    holdingStory: newValue,
+                }
+            }, { merge: true });
+        else if(category == "category4")
+            await this.userRef.set({
+                category4: {
+                    holdingStory: newValue,
+                }
+            }, { merge: true });
+    }
+
+    //get holding story index by category for specific user
+    getHoldingStoryByCategoryForUser = (category) => {
+        return new Promise((resolve, reject) => {
+            this.db.collection('users').doc(this.uid).get().then((user) => {
+                resolve(getDataByCategory(category, "holdingStory", user.data()));
+            }).catch((error) => {
+                reject(error)
+            })
+        })
+        
+    }
+   
+     //get story links by category
+     getStoryByCategory = (category) => {
+
+        return new Promise((resolve, reject) => {
+            this.db.collection("stories").doc(category).get().then((story) => {
+                // console.log("getStoryByCategory ", story.data());
+                resolve(story.data());
+            }).catch((error) => {
+                reject(error)
+            })
+        })
+
+        // return new Promise((resolve, reject) => {
+        //     this.db.collection('stories').doc(category).get().then((story) => {
+        //         console.log("getStoryByCategory ", story.data());
+        //         // console.log(story.data());
+        //         resolve(story.data());
+        //     }).catch((error) => {
+        //         reject(error)
+        //     })
+        // })
+     }
+
     generateUserDocument = async (user, additionalData) => {
         if (!user) return;
         this.userRef = this.db.collection('users').doc(user.uid);
@@ -225,6 +288,7 @@ class FirebaseService {
     };
 
 }
+
 
 const instance = new FirebaseService();
 

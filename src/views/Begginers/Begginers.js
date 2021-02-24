@@ -4,7 +4,6 @@ import {SwitchCategory} from '../../routes/categoryRoutes'
 import {useRouteMatch} from "react-router-dom";
 
 
-
 function Begginers(props) {
     let match = useRouteMatch();
     return (

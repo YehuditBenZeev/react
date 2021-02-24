@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import firebaseService from '../../firebase_services/firebaseService';
 // import SignedApp from './SignedApp';
 import {Component} from 'react';
-import { Card } from '@material-ui/core';
+import { Card , CircularProgress } from '@material-ui/core';
 import ImageCard from './DisplayImage';
 // import {  } from "DisplayImage";
 
@@ -12,6 +12,8 @@ import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
+import RegularButton from '../../components/CustomButtons/Button'
+//import story_button from '../../assets/css/material-dashboard-react.css'
 
 
 // get map size
@@ -35,10 +37,11 @@ class StoryPage extends Component {
             story_state: 0,
             story_count: 0, // len of story_links
             get_story: true,
-            finished_to_raed: false
+            finished_to_raed: false,
+            loading: true
         };
-        this.get_next_story = this.get_next_story.bind(this);
-        this.finished_story= this.finished_story.bind(this);
+        // this.get_next_story = this.get_next_story.bind(this);
+        // this.finished_story= this.finished_story.bind(this);
     
     }
 
@@ -50,74 +53,73 @@ class StoryPage extends Component {
         .then(function(list_links) {
             list = list_links.stories;
         }).then(() => {
-            firebaseService.getHoldingStoryByCategoryForUser(this.props.location.state ,this.user)
-            .then(function(st){
-                story_st = st;
-            }).then(()=>{
-                this.setState({story_links: list});  
-                this.setState({story_state: story_st});
-                this.setState({story_count:  getMapSize(list)});
-            })
+            story_st = firebaseService.user[this.props.location.state]["holdingStory"]
+            // story_st = firebaseService.getHoldingStoryByCategoryForUser(this.props.location.state ,this.user)
+            // .then()
+            if (story_st > this.state.story_count)
+                story_st = 0;
+
+            this.setState({story_links: list});  
+            this.setState({story_state: story_st});
+            this.setState({story_count:  getMapSize(list)});
+            this.setState({loading: false})
         })
     }
 
-    finished_story(event) {
-        event.preventDefault();
-        console.log("finished_story");
-        console.log("state ", this.state.story_count);
-        console.log("state ", this.state.story_state);
-        
-         
-        this.setState({finished_to_raed : true});
-        this.setState({get_story: false});
-                
+    finished_story = async (event) =>{
+        console.log("finished_to_raed", this.state.finished_to_raed);
+        console.log("get_story ", this.state.get_story);
+        event.preventDefault(); 
+        await  this.setState({finished_to_raed : true});
+        await  this.setState({get_story: false});
+        console.log("finished_to_raed", this.state.finished_to_raed);
+        console.log("get_story ", this.state.get_story);
         var next  = this.state.story_state + 1;
-        this.setState({story_state: next});
         firebaseService.setHoldingStoryByCategoryForUser(this.props.location.state, next)
     }
 
-    get_next_story(){
+    get_next_story = (event) =>{
         console.log("get_next_story");
+        this.setState({finished_to_raed : false});
+        this.setState({get_story: true})
+
+        console.log("story_state", this.state.story_state);
+        console.log("story_count ", this.state.story_count);
+        if (this.state.story_state < this.state.story_count -1 ){
+            var next  = this.state.story_state + 1;
+            this.setState({story_state: next});
+        }
+        else{
+            console.log("in if");
+            this.setState({story_state: 0});
+            firebaseService.setHoldingStoryByCategoryForUser(this.props.location.state, 0)
+        }
     }
 
     render() {
-        var is_last = this.state.count - 1 == this.state.story_state ? true : false
-        console.log("story render")
-        console.log("story_links ", this.state.story_links);
-        console.log("story_state ", this.state.story_state);
-        console.log("story_count ", this.state.story_count);
-        // if (this.story_state == NaN)
-        //     this.setState({story_state: 0});
-
-        // console.log(this.state.story_links[this.story_state]);
-
-        // console.log(Object.keys(this.state.story_links)[this.state.story_state]);
-
-        // return ( 
-        //     <div id="ImageCard">
-        //         <ImageCard image_link={this.state.story_links[this.story_state]} last={is_last}/>         
-        //     </div>
-                
-        //     );
-        console.log("image link " ,this.state.story_links[this.state.story_state]);
+        var is_last = this.state.story_count - 1 == this.state.story_state ? true : false
+        var link = this.state.story_links[this.state.story_state]
+        var story_name = "story ".concat(this.state.story_state)
+        
         return (
+            this.state.loading ? <CircularProgress /> :
             <Card>
                 <CardActionArea>
                     <CardMedia
                         component="img"
-                        alt="Contemplative Reptile"
-                        image={this.state.story_links[this.story_state]}
+                        alt={story_name}
+                        image={link}
                         title="Contemplative Reptile"
                     />
                 </CardActionArea>
                 <CardActions>
                   <div id="story_buttons">
-                    <Button size="small" color="primary" onClick={this.finished_story} disabled={this.state.finished_to_raed}>
+                  <RegularButton color='info' onClick={this.finished_story} disabled={this.state.finished_to_raed}>
                       סימתי לקרוא    
-                    </Button>
-                    <Button size="small" color="primary" onClick={this.get_next_story} disabled={this.state.get_story}>
-                      {is_last? " סיפור הבא" : "חזור לסיפור הראשון"}
-                    </Button>
+                    </RegularButton>
+                    <RegularButton color='info' onClick={this.get_next_story} disabled={this.state.get_story}>
+                      {is_last? " חזור לסיפור הראשון " : " סיפור הבא "}
+                    </RegularButton>
                   </div>
         
                 </CardActions>

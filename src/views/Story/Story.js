@@ -4,7 +4,7 @@ import firebaseService from '../../firebase_services/firebaseService';
 // import SignedApp from './SignedApp';
 import {Component} from 'react';
 import { Card , CircularProgress } from '@material-ui/core';
-import ImageCard from './DisplayImage';
+// import ImageCard from './DisplayImage';
 // import {  } from "DisplayImage";
 
 //import Card from '@material-ui/core/Card';

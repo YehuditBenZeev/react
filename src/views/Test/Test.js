@@ -2,9 +2,12 @@ import React, {Component} from 'react';
 import Question from './Question/Question';
 import Answer from './Answer/Answer';
 import firebaseService from 'firebase_services/firebaseService';
-import { Button } from '@material-ui/core';
-import { Card } from '@material-ui/core';
-
+import GridItem from "components/Grid/GridItem.js";
+import GridContainer from "components/Grid/GridContainer.js";
+import CardHeader from '../../components/Card/CardHeader';
+import CardFooter from '../../components/Card/CardFooter';
+import RegularButton from '../../components/CustomButtons/Button'
+import Card from "../../components/Card/Card";
 
 
 // get map size
@@ -120,43 +123,58 @@ class Test extends Component {
         let { quiestions, answers, correctAnswer, clickedAnswer, step, score } = this.state;
         var grade = (score * (100 / Object.keys(quiestions).length)).toFixed(2);
         return(
+            <GridContainer >
+
+            <GridItem xs={12} sm={12} md={8} direction='row'>
             <Card>
-                <div className="Content">
                     {step <= Object.keys(quiestions).length ? 
                         (<>
-                            <Question
-                                question={quiestions[step]}
-                            />
-                            <Answer
-                                answer={answers[step]}
-                                step={step}
-                                checkAnswer={this.checkAnswer}
-                                correctAnswer={correctAnswer}
-                                clickedAnswer={clickedAnswer}
-                            />
-                            <Button className="NextStep" 
-                                    variant="contained"
-                                    color="primary"
-                                    onClick={() => this.nextStep(step)} 
-                                    disabled={
-                                        clickedAnswer && Object.keys(quiestions).length >= step
-                                        ? false : true
-                                    }>
-                                Next
-                            </Button>
-                        </>) : (
-                            <Card>
-                            <div className="finalPage">
-                                {}
-                                <h2>{"סיימת את המבחן!"}</h2>
-                                <h2> {"הציון שלך הוא: " + grade + " %"}</h2>
-                                <h2>{grade >=90 ? "מצוין!" : grade >=80 ? "טוב מאד!"  : grade >=60 ? "טוב" : "למד שוב את המילים"}</h2>
+                            <div className='absolute'>            
+                                <CardHeader color="info" >
+                                    <Question
+                                        question={quiestions[step]}
+                                    />
+                                </CardHeader>
                             </div>
-                            </Card>
+                            <div className='pt-16'>
+                                <Answer
+                                    answer={answers[step]}
+                                    step={step}
+                                    checkAnswer={this.checkAnswer}
+                                    correctAnswer={correctAnswer}
+                                    clickedAnswer={clickedAnswer}
+                                />
+                            </div>
+                            <CardFooter>
+                                <RegularButton 
+                                        variant="contained"
+                                        color="info"
+                                        onClick={() => this.nextStep(step)} 
+                                        disabled={
+                                            clickedAnswer && Object.keys(quiestions).length >= step
+                                            ? false : true
+                                        }>
+                                    Next
+                                </RegularButton>
+                            </CardFooter>
+                        </>) : (
+                            <div className='p-48'>
+                            <CardHeader color='info'  >
+                                {}
+                                <h5>{" סיימת את המבחן! "}</h5>
+                                <h5> {" הציון שלך הוא : " + grade + " % "}</h5>
+                                <h5>{grade >=90 ? " מצוין! " : grade >=80 ? " טוב מאד! "  : grade >=60 ? " טוב " : " למד שוב את המילים"}</h5>
+                            
+                            </CardHeader>
+                            </div>
                         )
                     }
-                </div>
+             
             </Card>
+            </GridItem>
+            </GridContainer>
+
+
         );
     }
 }

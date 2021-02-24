@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import firebaseService from '../../firebase_services/firebaseService';
 // import SignedApp from './SignedApp';
 import {Component} from 'react';
-import { Card , CircularProgress } from '@material-ui/core';
+import { Card , CircularProgress , LinearProgress} from '@material-ui/core';
 // import ImageCard from './DisplayImage';
 // import {  } from "DisplayImage";
 
@@ -67,42 +67,34 @@ class StoryPage extends Component {
     }
 
     finished_story = async (event) =>{
-        console.log("finished_to_raed", this.state.finished_to_raed);
-        console.log("get_story ", this.state.get_story);
         event.preventDefault(); 
         await  this.setState({finished_to_raed : true});
         await  this.setState({get_story: false});
-        console.log("finished_to_raed", this.state.finished_to_raed);
-        console.log("get_story ", this.state.get_story);
         var next  = this.state.story_state + 1;
         firebaseService.setHoldingStoryByCategoryForUser(this.props.location.state, next)
     }
 
     get_next_story = (event) =>{
-        console.log("get_next_story");
         this.setState({finished_to_raed : false});
-        this.setState({get_story: true})
+        this.setState({get_story: true});
 
-        console.log("story_state", this.state.story_state);
-        console.log("story_count ", this.state.story_count);
         if (this.state.story_state < this.state.story_count -1 ){
             var next  = this.state.story_state + 1;
             this.setState({story_state: next});
         }
         else{
-            console.log("in if");
             this.setState({story_state: 0});
             firebaseService.setHoldingStoryByCategoryForUser(this.props.location.state, 0)
         }
     }
 
     render() {
-        var is_last = this.state.story_count - 1 == this.state.story_state ? true : false
-        var link = this.state.story_links[this.state.story_state]
-        var story_name = "story ".concat(this.state.story_state)
-        
+        var is_last = this.state.story_count - 1 == this.state.story_state ? true : false;
+        var link = this.state.story_links[this.state.story_state];
+        var story_name = "story ".concat(this.state.story_state);
+        // console.log(this.state.story_links);
         return (
-            this.state.loading ? <CircularProgress /> :
+            this.state.loading ? <LinearProgress /> :
             <Card>
                 <CardActionArea>
                     <CardMedia

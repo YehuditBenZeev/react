@@ -12,7 +12,7 @@ import {
     grayColor,
     blackColor,
     hexToRgb
-  } from "assets/jss/material-dashboard-react.js";
+} from "assets/jss/material-dashboard-react.js";
 
 
 const registerStyle = theme => ({

@@ -1,7 +1,7 @@
 import React from "react";
 import firebaseService from 'firebase_services/firebaseService';
 import {Component} from 'react';
-import { Card } from '@material-ui/core';
+// import { Card } from '@material-ui/core';
 import CardActions from '@material-ui/core/CardActions';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
@@ -12,7 +12,13 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-
+import CardHeader from '../../components/Card/CardHeader';
+import CardFooter from '../../components/Card/CardFooter';
+import RegularButton from '../../components/CustomButtons/Button'
+import Card from "../../components/Card/Card";
+import CardIcon from "../../components/Card/CardIcon";
+import GridItem from "components/Grid/GridItem.js";
+import GridContainer from "components/Grid/GridContainer.js";
 
 //get map size
 function getMapSize(x) {
@@ -147,21 +153,25 @@ class LearnWords extends Component {
                     <ListItemText
                     primary={this.state.grammerWords[Object.keys(this.state.words)[this.state.count]][key] + " = " + key}
                     />
-                    <ListItemIcon>
+                    <CardIcon>
                         <PriorityHighIcon />
-                    </ListItemIcon>
+                    </CardIcon>
                 </ListItem>
             ))
             
         }
         return (
-            <div className="word-container">
+           
+            <GridContainer>
+
+            <GridItem xs={12} sm={12} md={8} direction='row'>        
                 <h2>לימוד מילים</h2>
                 <Card style={styles}>
                     <div className="content" style={styles}>
-                        <CardActions style={styles}><IconButton>
-                        <SettingsVoiceIcon size="large" onClick={this.play}>
-                        </SettingsVoiceIcon></IconButton>
+                        <CardActions style={styles}>
+                            <CardHeader color='info'>
+                                <SettingsVoiceIcon size="large" onClick={this.play}></SettingsVoiceIcon>
+                            </CardHeader>
                         </CardActions>
                         {  
                             <h3>    
@@ -174,16 +184,17 @@ class LearnWords extends Component {
                         }
                        
                         <CardActions>
-                            <IconButton id="previous" aria-label="add an arrow" onClick={this.handlePrevious} disabled={this.state.previousDisabled}>
+                            <RegularButton id="previous" color='info' aria-label="add an arrow" onClick={this.handlePrevious} disabled={this.state.previousDisabled}>
                                 <ArrowForwardIosIcon size="large"/>
-                            </IconButton>
-                            <IconButton id="next" aria-label="add an arrow" onClick={this.handleNext} disabled={this.state.nextDisabled}>
+                            </RegularButton>
+                            <RegularButton id="next" color='info' aria-label="add an arrow" onClick={this.handleNext} disabled={this.state.nextDisabled}>
                                 <ArrowBackIosIcon size="large"/>
-                            </IconButton>
+                            </RegularButton>
                         </CardActions>
                     </div>
                 </Card>
-            </div>
+                </GridItem>
+            </GridContainer>
           );
       }
   }

@@ -226,6 +226,7 @@ class FirebaseService {
                 reject(error)
             })
         })
+        
     }
    
      //get story links by category

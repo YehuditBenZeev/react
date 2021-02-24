@@ -26,59 +26,54 @@ function getMapSize(x) {
 }
 
 
-class StoryPage extends Component {
-  
-
+class StoryPage extends Component {  
+    
     constructor() {
         super();
         this.state = {
             story_links: [],
             story_state: 0,
-            story_count: 0, // ten of story_links
-            get_story: false,
-            finished_to_raed: true
+            story_count: 0, // len of story_links
+            get_story: true,
+            finished_to_raed: false
         };
-        // this.handleNext = this.handleNext.bind(this);
-        // this.handlePrevious = this.handlePrevious.bind(this);
-        // this.play = this.play.bind(this);
-
+        this.get_next_story = this.get_next_story.bind(this);
+        this.finished_story= this.finished_story.bind(this);
+    
     }
 
     componentDidMount() {
         var list;
         var story_st;
+        var stories_len;
         firebaseService.getStoryByCategory(this.props.location.state)
         .then(function(list_links) {
-            list = list_links;
+            list = list_links.stories;
         }).then(() => {
-            this.setState({story_links: list});
-            this.setState({count: getMapSize(list)});
+            firebaseService.getHoldingStoryByCategoryForUser(this.props.location.state ,this.user)
+            .then(function(st){
+                story_st = st;
+            }).then(()=>{
+                this.setState({story_links: list});  
+                this.setState({story_state: story_st});
+                this.setState({story_count:  getMapSize(list)});
+            })
         })
-
-        firebaseService.getHoldingStoryByCategoryForUser(this.props.location.state ,this.user)
-        .then(function(st){
-            story_st = st;
-        }).then(()=>{
-            this.setState({story_state: story_st});
-        })
-
-        
-        
     }
 
     finished_story(event) {
+        event.preventDefault();
         console.log("finished_story");
-        // event.preventDefault();
-        // if (this.state.story_state < this.state.story_count - 1){
+        console.log("state ", this.state.story_count);
+        console.log("state ", this.state.story_state);
+        
          
-        // this.setState({finished_story : false});
-        // this.setState({get_story: true});
-            
-        // var next  = this.state.count + 1;
-        // this.setState({count: next});
-        // firebaseService.setHoldingStoryByCategoryForUser(this.props.location.state, next)
-        // }
-    
+        this.setState({finished_to_raed : true});
+        this.setState({get_story: false});
+                
+        var next  = this.state.story_state + 1;
+        this.setState({story_state: next});
+        firebaseService.setHoldingStoryByCategoryForUser(this.props.location.state, next)
     }
 
     get_next_story(){
@@ -88,9 +83,11 @@ class StoryPage extends Component {
     render() {
         var is_last = this.state.count - 1 == this.state.story_state ? true : false
         console.log("story render")
-        console.log(this.state.story_links);
-        console.log(this.state.story_state);
-        console.log(this.state.story_count);
+        console.log("story_links ", this.state.story_links);
+        console.log("story_state ", this.state.story_state);
+        console.log("story_count ", this.state.story_count);
+        // if (this.story_state == NaN)
+        //     this.setState({story_state: 0});
 
         // console.log(this.state.story_links[this.story_state]);
 
@@ -102,14 +99,14 @@ class StoryPage extends Component {
         //     </div>
                 
         //     );
-
+        console.log("image link " ,this.state.story_links[this.state.story_state]);
         return (
             <Card>
                 <CardActionArea>
                     <CardMedia
                         component="img"
                         alt="Contemplative Reptile"
-                        image="https://firebasestorage.googleapis.com/v0/b/react-english-e6bf1.appspot.com/o/story%202%20b.PNG?alt=media&token=3b1cfcda-4445-4b13-96d0-6d47a42eb135"
+                        image={this.state.story_links[this.story_state]}
                         title="Contemplative Reptile"
                     />
                 </CardActionArea>

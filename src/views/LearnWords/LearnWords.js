@@ -165,7 +165,6 @@ class LearnWords extends Component {
             <GridContainer>
 
             <GridItem xs={12} sm={12} md={8} direction='row'>        
-                <h2>לימוד מילים</h2>
                 <Card style={styles}>
                     <div className="content" style={styles}>
                         <CardActions style={styles}>

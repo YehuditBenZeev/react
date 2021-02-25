@@ -2,8 +2,8 @@ import React, {Component} from 'react';
 import Question from './Question/Question';
 import Answer from './Answer/Answer';
 import firebaseService from 'firebase_services/firebaseService';
-import GridItem from "components/Grid/GridItem.js";
-import GridContainer from "components/Grid/GridContainer.js";
+import GridItem from "components/Grid/GridItem";
+import GridContainer from "components/Grid/GridContainer";
 import CardHeader from '../../components/Card/CardHeader';
 import CardFooter from '../../components/Card/CardFooter';
 import RegularButton from '../../components/CustomButtons/Button'

@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import firebaseService from '../../firebase_services/firebaseService';
 // import SignedApp from './SignedApp';
 import {Component} from 'react';
-import { Card , CircularProgress , LinearProgress} from '@material-ui/core';
+import { CircularProgress , LinearProgress} from '@material-ui/core';
 // import ImageCard from './DisplayImage';
 // import {  } from "DisplayImage";
 
@@ -11,9 +11,14 @@ import { Card , CircularProgress , LinearProgress} from '@material-ui/core';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
 import CardMedia from '@material-ui/core/CardMedia';
-import Button from '@material-ui/core/Button';
 import RegularButton from '../../components/CustomButtons/Button'
 //import story_button from '../../assets/css/material-dashboard-react.css'
+import CardHeader from '../../components/Card/CardHeader';
+import CardFooter from '../../components/Card/CardFooter';
+import Card from "../../components/Card/Card";
+import CardIcon from "../../components/Card/CardIcon";
+import GridItem from "components/Grid/GridItem";
+import GridContainer from "components/Grid/GridContainer";
 
 
 // get map size
@@ -48,7 +53,6 @@ class StoryPage extends Component {
     componentDidMount() {
         var list;
         var story_st;
-        var stories_len;
         firebaseService.getStoryByCategory(this.props.location.state)
         .then(function(list_links) {
             list = list_links.stories;
@@ -96,25 +100,25 @@ class StoryPage extends Component {
         return (
             this.state.loading ? <LinearProgress /> :
             <Card>
-                <CardActionArea>
+                <div className='p-48'>
+                
                     <CardMedia
                         component="img"
                         alt={story_name}
                         image={link}
                         title="Contemplative Reptile"
                     />
-                </CardActionArea>
-                <CardActions>
+                
                   <div id="story_buttons">
-                  <RegularButton color='info' onClick={this.finished_story} disabled={this.state.finished_to_raed}>
+                  <RegularButton className="w-full mx-auto normal-case mt-16" color='info' onClick={this.finished_story} disabled={this.state.finished_to_raed}>
                       סימתי לקרוא    
                     </RegularButton>
-                    <RegularButton color='info' onClick={this.get_next_story} disabled={this.state.get_story}>
+                    <RegularButton className="w-full mx-auto normal-case mt-16" color='info' onClick={this.get_next_story} disabled={this.state.get_story}>
                       {is_last? " חזור לסיפור הראשון " : " סיפור הבא "}
                     </RegularButton>
                   </div>
         
-                </CardActions>
+                </div>
             </Card>
         );
       }

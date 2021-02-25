@@ -17,8 +17,8 @@ import CardFooter from '../../components/Card/CardFooter';
 import RegularButton from '../../components/CustomButtons/Button'
 import Card from "../../components/Card/Card";
 import CardIcon from "../../components/Card/CardIcon";
-import GridItem from "components/Grid/GridItem.js";
-import GridContainer from "components/Grid/GridContainer.js";
+import GridItem from "components/Grid/GridItem";
+import GridContainer from "components/Grid/GridContainer";
 
 //get map size
 function getMapSize(x) {

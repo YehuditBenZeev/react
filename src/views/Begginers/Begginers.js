@@ -1,14 +1,12 @@
-import { Card } from '@material-ui/core';
 import React from "react";
-import {SwitchCategory} from '../../routes/categoryRoutes'
-import {useRouteMatch} from "react-router-dom";
-
+import UserStatus from 'views/userStatus/userStatus'
 
 function Begginers(props) {
-    let match = useRouteMatch();
-    return (
-        <div>{SwitchCategory(match.url)}</div>
-    )
+  
+  
+  return (
+    <UserStatus category = "category1"/>
+  )
 }
 
 export default Begginers;

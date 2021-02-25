@@ -25,6 +25,7 @@ import CardIcon from "components/Card/CardIcon.js";
 import CardBody from "components/Card/CardBody.js";
 import CardFooter from "components/Card/CardFooter.js";
 import { UserContext } from "../../userProvider";
+import firebaseService from "firebase_services/firebaseService"
 
 import {
   dailySalesChart,
@@ -37,7 +38,8 @@ import styles from "assets/jss/material-dashboard-react/views/dashboardStyle.js"
 const useStyles = makeStyles(styles);
 
 export default function Dashboard(props) {
-  const user = useContext(UserContext);
+  console.log(firebaseService.user);
+  // const user = useContext(UserContext);
   const classes = useStyles();
   return (
     <div>

@@ -4,7 +4,7 @@ import Games from "@material-ui/icons/Games";
 import School from "@material-ui/icons/School";
 import Begginers from "views/Begginers/Begginers.js";
 import LearnWords from "views/LearnWords/LearnWords";
-import StoryPage from 'views/Story/story'
+import StoryPage from 'views/Story/Story'
 import {
   Switch, Route, useRouteMatch,
   useParams

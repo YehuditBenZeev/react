@@ -30,7 +30,7 @@ export default function ImageCard(props) {
                 <CardMedia
                     component="img"
                     alt="Contemplative Reptile"
-                    image="https://firebasestorage.googleapis.com/v0/b/react-english-e6bf1.appspot.com/o/story%202%20b.PNG?alt=media&token=3b1cfcda-4445-4b13-96d0-6d47a42eb135"
+                    image={link}
                     title="Contemplative Reptile"
                 />
             </CardActionArea>

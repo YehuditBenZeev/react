@@ -1,11 +1,20 @@
 import React, { Component, createContext } from "react";
 import firebaseService from 'firebase_services/firebaseService';
 
+
+
 export const UserContext = createContext({ user: null });
 class UserProvider extends Component {
+
   state = {
-    user: null
+    user: null,
+    loading: true
   };
+
+  constructor() {
+    super();
+
+  }
 
   componentDidMount = () => {
     firebaseService.init(
@@ -15,11 +24,17 @@ class UserProvider extends Component {
         }
     );
     firebaseService.onAuthStateChanged(async userAuth => {
-        const user = await firebaseService.generateUserDocument(userAuth);
-        this.setState({ user });
+      if(userAuth == null){
+        this.setState({user: false});
+      }
+      else{
+        await firebaseService.generateUserDocument(userAuth);
+        this.setState({user:true });
+      }
     });
   };
   render() {
+
     return (
       <UserContext.Provider value={this.state.user}>
         {this.props.children}
@@ -27,4 +42,5 @@ class UserProvider extends Component {
     );
   }
 }
+
 export default UserProvider;

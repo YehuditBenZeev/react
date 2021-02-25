@@ -40,10 +40,10 @@ const headerStyle = () => ({
     ...defaultFont,
     letterSpacing: "unset",
     lineHeight: "30px",
-    fontSize: "18px",
+    fontSize: "24px",
     borderRadius: "3px",
     textTransform: "none",
-    color: "#007887",
+    color: infoColor[0],
     margin: "0",
     "&:hover,&:focus": {
       background: "transparent"

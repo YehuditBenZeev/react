@@ -1043,6 +1043,10 @@
   padding-bottom: 9.6rem
 }
 
+.pt-82 {
+  padding-top: 6.5vw;
+}
+
 .pointer-events-none {
   pointer-events: none
 }

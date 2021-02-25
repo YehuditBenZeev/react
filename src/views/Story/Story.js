@@ -3,15 +3,22 @@ import { useState, useEffect } from 'react';
 import firebaseService from '../../firebase_services/firebaseService';
 // import SignedApp from './SignedApp';
 import {Component} from 'react';
-import { Card } from '@material-ui/core';
-import ImageCard from './DisplayImage';
+import { CircularProgress , LinearProgress} from '@material-ui/core';
+// import ImageCard from './DisplayImage';
 // import {  } from "DisplayImage";
 
 //import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
 import CardMedia from '@material-ui/core/CardMedia';
-import Button from '@material-ui/core/Button';
+import RegularButton from '../../components/CustomButtons/Button'
+//import story_button from '../../assets/css/material-dashboard-react.css'
+import CardHeader from '../../components/Card/CardHeader';
+import CardFooter from '../../components/Card/CardFooter';
+import Card from "../../components/Card/Card";
+import CardIcon from "../../components/Card/CardIcon";
+import GridItem from "components/Grid/GridItem";
+import GridContainer from "components/Grid/GridContainer";
 
 
 // get map size
@@ -26,22 +33,21 @@ function getMapSize(x) {
 }
 
 
-class StoryPage extends Component {
-  
-
+class StoryPage extends Component {  
+    
     constructor() {
         super();
         this.state = {
             story_links: [],
             story_state: 0,
-            story_count: 0, // ten of story_links
-            get_story: false,
-            finished_to_raed: true
+            story_count: 0, // len of story_links
+            get_story: true,
+            finished_to_raed: false,
+            loading: true
         };
-        // this.handleNext = this.handleNext.bind(this);
-        // this.handlePrevious = this.handlePrevious.bind(this);
-        // this.play = this.play.bind(this);
-
+        // this.get_next_story = this.get_next_story.bind(this);
+        // this.finished_story= this.finished_story.bind(this);
+    
     }
 
     componentDidMount() {
@@ -49,81 +55,70 @@ class StoryPage extends Component {
         var story_st;
         firebaseService.getStoryByCategory(this.props.location.state)
         .then(function(list_links) {
-            list = list_links;
+            list = list_links.stories;
         }).then(() => {
-            this.setState({story_links: list});
-            this.setState({count: getMapSize(list)});
-        })
+            story_st = firebaseService.user[this.props.location.state]["holdingStory"]
+            // story_st = firebaseService.getHoldingStoryByCategoryForUser(this.props.location.state ,this.user)
+            // .then()
+            if (story_st > this.state.story_count)
+                story_st = 0;
 
-        firebaseService.getHoldingStoryByCategoryForUser(this.props.location.state ,this.user)
-        .then(function(st){
-            story_st = st;
-        }).then(()=>{
+            this.setState({story_links: list});  
             this.setState({story_state: story_st});
+            this.setState({story_count:  getMapSize(list)});
+            this.setState({loading: false})
         })
-
-        
-        
     }
 
-    finished_story(event) {
-        console.log("finished_story");
-        // event.preventDefault();
-        // if (this.state.story_state < this.state.story_count - 1){
-         
-        // this.setState({finished_story : false});
-        // this.setState({get_story: true});
-            
-        // var next  = this.state.count + 1;
-        // this.setState({count: next});
-        // firebaseService.setHoldingStoryByCategoryForUser(this.props.location.state, next)
-        // }
-    
+    finished_story = async (event) =>{
+        event.preventDefault(); 
+        await  this.setState({finished_to_raed : true});
+        await  this.setState({get_story: false});
+        var next  = this.state.story_state + 1;
+        firebaseService.setHoldingStoryByCategoryForUser(this.props.location.state, next)
     }
 
-    get_next_story(){
-        console.log("get_next_story");
+    get_next_story = (event) =>{
+        this.setState({finished_to_raed : false});
+        this.setState({get_story: true});
+
+        if (this.state.story_state < this.state.story_count -1 ){
+            var next  = this.state.story_state + 1;
+            this.setState({story_state: next});
+        }
+        else{
+            this.setState({story_state: 0});
+            firebaseService.setHoldingStoryByCategoryForUser(this.props.location.state, 0)
+        }
     }
 
     render() {
-        var is_last = this.state.count - 1 == this.state.story_state ? true : false
-        console.log("story render")
-        console.log(this.state.story_links);
-        console.log(this.state.story_state);
-        console.log(this.state.story_count);
-
-        // console.log(this.state.story_links[this.story_state]);
-
-        // console.log(Object.keys(this.state.story_links)[this.state.story_state]);
-
-        // return ( 
-        //     <div id="ImageCard">
-        //         <ImageCard image_link={this.state.story_links[this.story_state]} last={is_last}/>         
-        //     </div>
-                
-        //     );
-
+        var is_last = this.state.story_count - 1 == this.state.story_state ? true : false;
+        var link = this.state.story_links[this.state.story_state];
+        var story_name = "story ".concat(this.state.story_state);
+        // console.log(this.state.story_links);
         return (
+            this.state.loading ? <LinearProgress /> :
             <Card>
-                <CardActionArea>
+                <div className='p-48'>
+                
                     <CardMedia
                         component="img"
-                        alt="Contemplative Reptile"
-                        image="https://firebasestorage.googleapis.com/v0/b/react-english-e6bf1.appspot.com/o/story%202%20b.PNG?alt=media&token=3b1cfcda-4445-4b13-96d0-6d47a42eb135"
+                        alt={story_name}
+                        image={link}
                         title="Contemplative Reptile"
                     />
-                </CardActionArea>
-                <CardActions>
+                
                   <div id="story_buttons">
-                    <Button size="small" color="primary" onClick={this.finished_story} disabled={this.state.finished_to_raed}>
+                  <RegularButton className="w-full mx-auto normal-case mt-16" color='info' onClick={this.finished_story} disabled={this.state.finished_to_raed}>
                       סימתי לקרוא    
-                    </Button>
-                    <Button size="small" color="primary" onClick={this.get_next_story} disabled={this.state.get_story}>
-                      {is_last? " סיפור הבא" : "חזור לסיפור הראשון"}
-                    </Button>
+                    </RegularButton>
+                    <RegularButton className="w-full mx-auto normal-case mt-16" color='info' onClick={this.get_next_story} disabled={this.state.get_story}>
+                      {is_last? " חזור לסיפור הראשון " : " סיפור הבא "}
+                    </RegularButton>
                   </div>
         
-                </CardActions>
+                </div>
             </Card>
         );
       }

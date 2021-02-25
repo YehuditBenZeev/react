@@ -38,7 +38,6 @@ import styles from "assets/jss/material-dashboard-react/views/dashboardStyle.js"
 const useStyles = makeStyles(styles);
 
 export default function Dashboard(props) {
-  console.log(firebaseService.user);
   // const user = useContext(UserContext);
   const classes = useStyles();
   return (

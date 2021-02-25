@@ -4,7 +4,9 @@ import Games from "@material-ui/icons/Games";
 import School from "@material-ui/icons/School";
 import Begginers from "views/Begginers/Begginers.js";
 import LearnWords from "views/LearnWords/LearnWords";
+import Test from "views/Test/Test";
 import StoryPage from 'views/Story/Story'
+
 import {
   Switch, Route, useRouteMatch,
   useParams
@@ -37,7 +39,7 @@ const categoryRoutes = [
       path: "/test",
       name: "מבחן",
       icon: School,
-      component: Begginers,
+      component: Test,
       layout: "/admin"
     },
   ]
@@ -45,6 +47,7 @@ const categoryRoutes = [
 const SwitchCategory = (category) => (
   <Switch>
       {categoryRoutes.map((prop, key) => {
+        console.log(prop, category);
           return (
               <Route
                   path={category + prop.path}

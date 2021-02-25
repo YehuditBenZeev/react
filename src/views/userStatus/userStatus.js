@@ -13,8 +13,6 @@ class UserStatus extends Component {
     }
 
   render(){
-      console.log(this.props.category);
-      console.log(this.props);
        return (
     <div>
       <GridContainer justify="space-evenly">

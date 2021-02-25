@@ -8,7 +8,6 @@ import bgImage from "assets/img/sidebar-2.jpg";
 
 
 
-
 const switchRoutes = (
   <Switch>
     {routes.map((prop, key) => {

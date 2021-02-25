@@ -20,9 +20,8 @@ function CategoryStatus(props) {
     const { category, subCategory } = props;
     const userStatus = firebaseService.user[category]
     const {text, data} = getNameCategory(subCategory)
-    console.log(text, data);
+
     function getNameCategory(subCategory) {
-        console.log(subCategory);
         switch (subCategory) {
             case 'learnWords':
                 return {text: "מילים", data: userStatus.holdingWords};

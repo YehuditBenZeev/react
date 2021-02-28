@@ -6,7 +6,6 @@ import { useRouteMatch } from "react-router-dom";
 
 function Begginers(props) {
   let match = useRouteMatch();
-  console.log(match, props.location.state);
 
   if (props.location.state != null)
     return (

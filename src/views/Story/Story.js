@@ -66,7 +66,7 @@ class StoryPage extends Component {
             this.setState({story_links: list});  
             this.setState({story_state: story_st});
             this.setState({story_count:  getMapSize(list)});
-            this.setState({loading: false})
+            // this.setState({loading: false})
         })
     }
 
@@ -98,7 +98,7 @@ class StoryPage extends Component {
         var story_name = "story ".concat(this.state.story_state);
         // console.log(this.state.story_links);
         return (
-            this.state.loading ? <LinearProgress /> :
+            this.state.loading ? <LinearProgress color =  'info'/> :
             <Card>
                 <div className='p-48'>
                 

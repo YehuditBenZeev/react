@@ -264,12 +264,23 @@ class FirebaseService {
         return this.getUserDocument(user.uid);
     };
 
+    updateDocument = async (uid) =>{
+        const doc_listener = this.db.collection('users').doc(uid).onSnapshot(snap => {
+            this.user = snap.data();
+        });
+    }
+
     getUserDocument = async uid => {
         if (!uid) return null;
         try {
           const userDocument = await this.db.collection('users').doc(uid).get();
+        //   const doc_listener = this.db.collection('users').doc(uid).onSnapshot(snap => {
+        //     this.user = userDocument.data();
+        //     this.uid = uid;
+        //   });
           this.uid = uid;
           this.user = userDocument.data();
+          this.updateDocument(this.uid);
           return {
             uid,
             ...userDocument.data()

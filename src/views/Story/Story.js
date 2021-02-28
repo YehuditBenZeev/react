@@ -75,7 +75,10 @@ class StoryPage extends Component {
         await  this.setState({finished_to_raed : true});
         await  this.setState({get_story: false});
         var next  = this.state.story_state + 1;
-        firebaseService.setHoldingStoryByCategoryForUser(this.props.location.state, next)
+       
+        console.log(firebaseService.user[this.props.location.state]["holdingStory"])
+        if (firebaseService.user[this.props.location.state]["holdingStory"] < this.state.story_count)
+            firebaseService.setHoldingStoryByCategoryForUser(this.props.location.state, next)
     }
 
     get_next_story = (event) =>{
@@ -88,7 +91,6 @@ class StoryPage extends Component {
         }
         else{
             this.setState({story_state: 0});
-            firebaseService.setHoldingStoryByCategoryForUser(this.props.location.state, 0)
         }
     }
 

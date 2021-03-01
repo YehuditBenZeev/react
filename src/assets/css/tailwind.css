@@ -4,6 +4,9 @@
   background-color: transparent
 }
 
+.MuiLinearProgress{
+  color: #007887;
+}
 .bg-black {
   background-color: #22292F
 }

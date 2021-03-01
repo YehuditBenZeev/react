@@ -19,6 +19,8 @@ import Card from "../../components/Card/Card";
 import CardIcon from "../../components/Card/CardIcon";
 import GridItem from "components/Grid/GridItem";
 import GridContainer from "components/Grid/GridContainer";
+import CircularLoader from 'components/Loader/CircularLoader'
+
 
 //get map size
 function getMapSize(x) {
@@ -47,7 +49,8 @@ class LearnWords extends Component {
             count: 0,
             wordsLength: 0,
             previousDisabled: false,
-            nextDisabled: false
+            nextDisabled: false,
+            loading: true
         };
         this.handleNext = this.handleNext.bind(this);
         this.handlePrevious = this.handlePrevious.bind(this);
@@ -86,6 +89,8 @@ class LearnWords extends Component {
 
                 //only now we will set the size, this will also indecate to show to screen
                 this.setState({wordsLength: wordsListLength});
+            }).then(()=>{
+                this.setState({loading: false});
             })
         })
     }
@@ -162,36 +167,38 @@ class LearnWords extends Component {
         }
         return (
            
+            this.state.loading ? 
+                <CircularLoader />
+            :
             <GridContainer>
-
-            <GridItem xs={12} sm={12} md={8} direction='row'>        
-                <Card style={styles}>
-                    <div className="content" style={styles}>
-                        <CardActions style={styles}>
-                            <CardHeader color='info'>
-                                <SettingsVoiceIcon size="large" onClick={this.play}></SettingsVoiceIcon>
-                            </CardHeader>
-                        </CardActions>
-                        {  
-                            <h3>    
-                                {"מילה: " + Object.keys(this.state.words)[this.state.count]}       
-                                <br />
-                                {"תרגום: " + this.state.words[Object.keys(this.state.words)[this.state.count]]}
-                                <br />
-                                <List dense={true}>{grammerList}</List>
-                            </h3>
-                        }
-                       
-                        <CardActions>
-                            <RegularButton id="previous" color='info' aria-label="add an arrow" onClick={this.handlePrevious} disabled={this.state.previousDisabled}>
-                                <ArrowForwardIosIcon size="large"/>
-                            </RegularButton>
-                            <RegularButton id="next" color='info' aria-label="add an arrow" onClick={this.handleNext} disabled={this.state.nextDisabled}>
-                                <ArrowBackIosIcon size="large"/>
-                            </RegularButton>
-                        </CardActions>
-                    </div>
-                </Card>
+                <GridItem xs={12} sm={12} md={8} direction='row'>        
+                    <Card style={styles}>
+                        <div className="content" style={styles}>
+                            <CardActions style={styles}>
+                                <CardHeader color='info'>
+                                    <SettingsVoiceIcon size="large" onClick={this.play}></SettingsVoiceIcon>
+                                </CardHeader>
+                            </CardActions>
+                            {  
+                                <h3>    
+                                    {"מילה: " + Object.keys(this.state.words)[this.state.count]}       
+                                    <br />
+                                    {"תרגום: " + this.state.words[Object.keys(this.state.words)[this.state.count]]}
+                                    <br />
+                                    <List dense={true}>{grammerList}</List>
+                                </h3>
+                            }
+                        
+                            <CardActions>
+                                <RegularButton id="previous" color='info' aria-label="add an arrow" onClick={this.handlePrevious} disabled={this.state.previousDisabled}>
+                                    <ArrowForwardIosIcon size="large"/>
+                                </RegularButton>
+                                <RegularButton id="next" color='info' aria-label="add an arrow" onClick={this.handleNext} disabled={this.state.nextDisabled}>
+                                    <ArrowBackIosIcon size="large"/>
+                                </RegularButton>
+                            </CardActions>
+                        </div>
+                    </Card>
                 </GridItem>
             </GridContainer>
           );

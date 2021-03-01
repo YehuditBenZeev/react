@@ -8,6 +8,7 @@ import CardHeader from '../../components/Card/CardHeader';
 import CardFooter from '../../components/Card/CardFooter';
 import RegularButton from '../../components/CustomButtons/Button'
 import Card from "../../components/Card/Card";
+import CircularLoader from 'components/Loader/CircularLoader'
 
 
 // get map size
@@ -25,15 +26,19 @@ function getRandomInt(max) {
 
 class Test extends Component {
 
+    constructor() {
+        super();
     // initiating the local state
-    state = {
-        quiestions: {},
-        answers: {},
-        correctAnswers: {},
-        correctAnswer: 0,
-        clickedAnswer: 0,
-        step: 0,
-        score: 0
+        this.state = {
+            quiestions: {},
+            answers: {},
+            correctAnswers: {},
+            correctAnswer: 0,
+            clickedAnswer: 0,
+            step: 0,
+            score: 0,
+            loading: true
+        }
     }
 
     componentDidMount() {
@@ -71,12 +76,15 @@ class Test extends Component {
                                         2: keys[1],
                                         3: keys[2] }
             }
+           
             this.setState({
-                quiestions: quiestions_list,
-                answers: answers_list,
-                correctAnswers: correctAnswers_list,
-                step: 1
-            });
+                    quiestions: quiestions_list,
+                    answers: answers_list,
+                    correctAnswers: correctAnswers_list,
+                    step: 1
+                });
+        }).then(()=>{
+            this.setState({loading: false});
         })
     }
 
@@ -123,55 +131,57 @@ class Test extends Component {
         let { quiestions, answers, correctAnswer, clickedAnswer, step, score } = this.state;
         var grade = (score * (100 / Object.keys(quiestions).length)).toFixed(2);
         return(
+            this.state.loading ? 
+                <CircularLoader />
+            :
             <GridContainer >
-
-            <GridItem xs={12} sm={12} md={8} direction='row'>
-            <Card>
-                    {step <= Object.keys(quiestions).length ? 
-                        (<>
-                            <div className='absolute'>            
-                                <CardHeader color="info" >
-                                    <Question
-                                        question={quiestions[step]}
+                <GridItem xs={12} sm={12} md={8} direction='row'>
+                    <Card>
+                        {step <= Object.keys(quiestions).length ? 
+                            (<>
+                                <div className='absolute'>            
+                                    <CardHeader color="info" >
+                                        <Question
+                                            question={quiestions[step]}
+                                        />
+                                    </CardHeader>
+                                </div>
+                                <div className='pt-16'>
+                                    <Answer
+                                        answer={answers[step]}
+                                        step={step}
+                                        checkAnswer={this.checkAnswer}
+                                        correctAnswer={correctAnswer}
+                                        clickedAnswer={clickedAnswer}
                                     />
+                                </div>
+                                <CardFooter>
+                                    <RegularButton 
+                                            variant="contained"
+                                            color="info"
+                                            onClick={() => this.nextStep(step)} 
+                                            disabled={
+                                                clickedAnswer && Object.keys(quiestions).length >= step
+                                                ? false : true
+                                            }>
+                                        Next
+                                    </RegularButton>
+                                </CardFooter>
+                            </>) : (
+                                <div className='p-48'>
+                                <CardHeader color='info'  >
+                                    {}
+                                    <h5>{" סיימת את המבחן! "}</h5>
+                                    <h5> {" הציון שלך הוא : " + grade + " % "}</h5>
+                                    <h5>{grade >=90 ? " מצוין! " : grade >=80 ? " טוב מאד! "  : grade >=60 ? " טוב " : " למד שוב את המילים"}</h5>
+                                
                                 </CardHeader>
-                            </div>
-                            <div className='pt-16'>
-                                <Answer
-                                    answer={answers[step]}
-                                    step={step}
-                                    checkAnswer={this.checkAnswer}
-                                    correctAnswer={correctAnswer}
-                                    clickedAnswer={clickedAnswer}
-                                />
-                            </div>
-                            <CardFooter>
-                                <RegularButton 
-                                        variant="contained"
-                                        color="info"
-                                        onClick={() => this.nextStep(step)} 
-                                        disabled={
-                                            clickedAnswer && Object.keys(quiestions).length >= step
-                                            ? false : true
-                                        }>
-                                    Next
-                                </RegularButton>
-                            </CardFooter>
-                        </>) : (
-                            <div className='p-48'>
-                            <CardHeader color='info'  >
-                                {}
-                                <h5>{" סיימת את המבחן! "}</h5>
-                                <h5> {" הציון שלך הוא : " + grade + " % "}</h5>
-                                <h5>{grade >=90 ? " מצוין! " : grade >=80 ? " טוב מאד! "  : grade >=60 ? " טוב " : " למד שוב את המילים"}</h5>
-                            
-                            </CardHeader>
-                            </div>
-                        )
-                    }
-             
-            </Card>
-            </GridItem>
+                                </div>
+                            )
+                        }
+                
+                    </Card>
+                </GridItem>
             </GridContainer>
 
 

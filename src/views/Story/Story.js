@@ -19,6 +19,8 @@ import Card from "../../components/Card/Card";
 import CardIcon from "../../components/Card/CardIcon";
 import GridItem from "components/Grid/GridItem";
 import GridContainer from "components/Grid/GridContainer";
+import CircularLoader from 'components/Loader/CircularLoader'
+
 
 
 // get map size
@@ -94,29 +96,33 @@ class StoryPage extends Component {
         }
     }
 
+
     render() {
         var is_last = this.state.story_count - 1 == this.state.story_state ? true : false;
         var link = this.state.story_links[this.state.story_state];
         var story_name = "story ".concat(this.state.story_state);
+      
         // console.log(this.state.story_links);
         return (
-            this.state.loading ? <LinearProgress /> :
+            this.state.loading ? 
+                <CircularLoader />
+            :
             <Card>
                 <div className='p-48'>
                 
                     <CardMedia
-                        component="img"
+                        component='img'
                         alt={story_name}
                         image={link}
-                        title="Contemplative Reptile"
+                        title={story_name}
                     />
                 
-                  <div id="story_buttons">
-                  <RegularButton className="w-full mx-auto normal-case mt-16" color='info' onClick={this.finished_story} disabled={this.state.finished_to_raed}>
+                  <div id='story_buttons'>
+                  <RegularButton className='w-full mx-auto normal-case mt-16' color='info' onClick={this.finished_story} disabled={this.state.finished_to_raed}>
                       סימתי לקרוא    
                     </RegularButton>
-                    <RegularButton className="w-full mx-auto normal-case mt-16" color='info' onClick={this.get_next_story} disabled={this.state.get_story}>
-                      {is_last? " חזור לסיפור הראשון " : " סיפור הבא "}
+                    <RegularButton className='w-full mx-auto normal-case mt-16' color='info' onClick={this.get_next_story} disabled={this.state.get_story}>
+                      {is_last? ' חזור לסיפור הראשון ' : ' סיפור הבא '}
                     </RegularButton>
                   </div>
         

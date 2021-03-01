@@ -13,18 +13,6 @@ import logo from "assets/img/reactlogo.png";
 
 let ps;
 
-// function mergeAllRoutes(){
-//   let allRoutes = [];
-//   routes.map(prop => {
-//     allRoutes.push({...prop, propPath:""})
-//     if(prop.children){
-//       subRoutes.map(child => {
-//         allRoutes.push({...child, propPath:prop.path})
-//       })
-//     }
-//   })
-//   return allRoutes;
-// }
 
 const switchRoutes = (
   <Switch>

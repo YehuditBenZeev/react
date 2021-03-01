@@ -13,41 +13,38 @@ import { CircularProgress } from '@material-ui/core';
 const useStyles = makeStyles(styles);
 
 function App() {
-  // const user = props.user;
-  // console.log(user);
   const user = useContext(UserContext);
-console.log(user);
-const classes = useStyles();
+  const classes = useStyles();
 
-if(user == null)
-return (
-  <div>
-  <div className={classes.registerWrapper}>
-    <div className={classes.content}>
-      <CircularProgress style={{'color': '#33bccd', 'width': "15vh", "height": "15vh"}}/>
-    </div>
-  </div>
-  <div
-    className={classes.background}
-    style={{ backgroundImage: "url(" + bgImage + ")" }}
-  >
-  </div>
-</div>
-);
-else
-  return (
-    user  ? 
-    <Router history={history}>
-      <Route path="/admin" component={Admin} />
-      <Redirect from="/" to="/admin/dashboard" />
-    </Router>
-      :
-      <Router history={history}>
-        <Route path="/registration" component={Registration} />
-        <Redirect from="/" to="/registration/login" />
-      </Router>
+  if (user == null)
+    return (
+      <div>
+        <div className={classes.registerWrapper}>
+          <div className={classes.content}>
+            <CircularProgress style={{ 'color': '#33bccd', 'width': "15vh", "height": "15vh" }} />
+          </div>
+        </div>
+        <div
+          className={classes.background}
+          style={{ backgroundImage: "url(" + bgImage + ")" }}
+        >
+        </div>
+      </div>
+    );
+  else
+    return (
+      user ?
+        <Router history={history}>
+          <Route path="/admin" component={Admin} />
+          <Redirect from="/" to="/admin/dashboard" />
+        </Router>
+        :
+        <Router history={history}>
+          <Route path="/registration" component={Registration} />
+          <Redirect from="/" to="/registration/login" />
+        </Router>
 
-  );
+    );
 }
 
 export default App;

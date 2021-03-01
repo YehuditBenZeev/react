@@ -40,7 +40,10 @@ const typographyStyle = {
     color: primaryColor[0]
   },
   infoText: {
-    color: infoColor[0]
+    color: infoColor[0],
+    display: "block",
+    fontSize: "5.2vw",
+    lineHeight: "1.42857143",
   },
   successText: {
     color: successColor[0]

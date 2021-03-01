@@ -101,8 +101,10 @@ class StoryPage extends Component {
         var is_last = this.state.story_count - 1 == this.state.story_state ? true : false;
         var link = this.state.story_links[this.state.story_state];
         var story_name = "story ".concat(this.state.story_state);
-      
-        // console.log(this.state.story_links);
+        
+        console.log(this.state.loading);
+        console.log(this.state.story_count);
+
         return (
             this.state.loading ? 
                 <CircularLoader />

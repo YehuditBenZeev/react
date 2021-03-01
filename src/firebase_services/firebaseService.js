@@ -129,6 +129,8 @@ class FirebaseService {
         if (!this.auth) {
             return;
         }
+        this.user = null;
+        this.uid = null;
         this.auth.signOut();
     };
 
@@ -218,19 +220,6 @@ class FirebaseService {
             }, { merge: true });
     }
 
-    //get holding story index by category for specific user
-    getHoldingStoryByCategoryForUser = (category) => {
-        // return new Promise((resolve, reject) => {
-        //     this.db.collection('users').doc(this.uid).get().then((user) => {
-        //         resolve(getDataByCategory(category, "holdingStory", user.data()));
-        //     }).catch((error) => {
-        //         reject(error)
-        //     })
-        // })
-
-        return 
-        
-    }
    
      //get story links by category
      getStoryByCategory = (category) => {
@@ -300,6 +289,19 @@ class FirebaseService {
             console.error("Error fetching user", error);
         }
     };
+
+    getWordsStoriesLength = category => {
+        return new Promise((resolve, reject) => {
+            let wordsStories = {};
+            this.db.collection("stories").doc(category).get().then((story) => {
+                wordsStories['story'] = Object.keys(story.data().stories).length;
+                this.db.collection("words").doc(category).get().then(word => {
+                    wordsStories['word'] = Object.keys(word.data().words).length;
+                    resolve(wordsStories);
+                })
+            })
+        })
+    }
 
 }
 

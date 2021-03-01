@@ -4,16 +4,7 @@ import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import { withFormsy } from 'formsy-react';
 import { lightBlue, red } from '@material-ui/core/colors';
 import {
-  grayColor,
-  primaryColor,
   infoColor,
-  successColor,
-  warningColor,
-  dangerColor,
-  roseColor,
-  whiteColor,
-  blackColor,
-  hexToRgb
 } from "assets/jss/material-dashboard-react.js";
 
 const theme = createMuiTheme({

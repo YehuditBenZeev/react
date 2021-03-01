@@ -25,6 +25,7 @@ class FirebaseService {
         this.db = firebase.firestore();
         this.auth = firebase.auth();
         success(true);
+        
     }
 
     UserSignUp = (userDetails) => {
@@ -128,6 +129,8 @@ class FirebaseService {
         if (!this.auth) {
             return;
         }
+        this.user = null;
+        this.uid = null;
         this.auth.signOut();
     };
 
@@ -190,44 +193,33 @@ class FirebaseService {
     }
 
     //set holding Story index by category for specific user
-    setHoldingStoryByCategoryForUser = async (category, newValue) => {
+    setHoldingStoryByCategoryForUser = (category, newValue) => {
         if(category == "category1")
-            await this.userRef.set({
+            this.userRef.set({
                 category1: {
                     holdingStory: newValue,
                 }
             }, { merge: true });
         else if(category == "category2")
-            await this.userRef.set({
+            this.userRef.set({
                 category2: {
                     holdingStory: newValue,
                 }
             }, { merge: true });
         else if(category == "category3")
-            await this.userRef.set({
+            this.userRef.set({
                 category3: {
                     holdingStory: newValue,
                 }
             }, { merge: true });
         else if(category == "category4")
-            await this.userRef.set({
+            this.userRef.set({
                 category4: {
                     holdingStory: newValue,
                 }
             }, { merge: true });
     }
 
-    //get holding story index by category for specific user
-    getHoldingStoryByCategoryForUser = (category) => {
-        return new Promise((resolve, reject) => {
-            this.db.collection('users').doc(this.uid).get().then((user) => {
-                resolve(getDataByCategory(category, "holdingStory", user.data()));
-            }).catch((error) => {
-                reject(error)
-            })
-        })
-        
-    }
    
      //get story links by category
      getStoryByCategory = (category) => {
@@ -272,12 +264,23 @@ class FirebaseService {
         return this.getUserDocument(user.uid);
     };
 
+    updateDocument = async (uid) =>{
+        const doc_listener = this.db.collection('users').doc(uid).onSnapshot(snap => {
+            this.user = snap.data();
+        });
+    }
+
     getUserDocument = async uid => {
         if (!uid) return null;
         try {
           const userDocument = await this.db.collection('users').doc(uid).get();
+        //   const doc_listener = this.db.collection('users').doc(uid).onSnapshot(snap => {
+        //     this.user = userDocument.data();
+        //     this.uid = uid;
+        //   });
           this.uid = uid;
           this.user = userDocument.data();
+          this.updateDocument(this.uid);
           return {
             uid,
             ...userDocument.data()
@@ -286,6 +289,19 @@ class FirebaseService {
             console.error("Error fetching user", error);
         }
     };
+
+    getWordsStoriesLength = category => {
+        return new Promise((resolve, reject) => {
+            let wordsStories = {};
+            this.db.collection("stories").doc(category).get().then((story) => {
+                wordsStories['story'] = Object.keys(story.data().stories).length;
+                this.db.collection("words").doc(category).get().then(word => {
+                    wordsStories['word'] = Object.keys(word.data().words).length;
+                    resolve(wordsStories);
+                })
+            })
+        })
+    }
 
 }
 

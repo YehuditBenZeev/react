@@ -1,5 +1,7 @@
 import React from 'react';
 import './Answer.css';
+import CardBody from '../../../components/Card/CardBody'
+
 
 const Answer = (props) => {
     let answers = Object.keys(props.answer)
@@ -19,7 +21,7 @@ const Answer = (props) => {
         ));
 
         return (
-            <>
+            <CardBody>
                 <ul disabled={props.clickedAnswer ? true : false} className="Answers">
                     {answers}
                 </ul>
@@ -30,7 +32,7 @@ const Answer = (props) => {
                         props.clickedAnswer ? 'תשובה שגויה!' : ''
                     }
                 </div>
-            </>
+            </CardBody>
         );
 }
 

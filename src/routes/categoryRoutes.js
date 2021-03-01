@@ -5,6 +5,7 @@ import School from "@material-ui/icons/School";
 import Begginers from "views/Begginers/Begginers.js";
 import LearnWords from "views/LearnWords/LearnWords";
 import Test from "views/Test/Test";
+import StoryPage from 'views/Story/story'
 
 import {
   Switch, Route, useRouteMatch,
@@ -24,7 +25,7 @@ const categoryRoutes = [
       path: "/story",
       name: "סיפור",
       icon: InsertDriveFile,
-      component: Begginers,
+      component: StoryPage,
       layout: "/admin"
     },
     {
@@ -46,6 +47,7 @@ const categoryRoutes = [
 const SwitchCategory = (category) => (
   <Switch>
       {categoryRoutes.map((prop, key) => {
+        console.log(prop, category);
           return (
               <Route
                   path={category + prop.path}

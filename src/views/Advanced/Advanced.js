@@ -1,14 +1,20 @@
-import { Card } from '@material-ui/core';
 import React from "react";
-import {SwitchCategory} from '../../routes/categoryRoutes'
-import {useRouteMatch} from "react-router-dom";
+import UserStatus from 'views/userStatus/userStatus'
+import { SwitchCategory } from '../../routes/categoryRoutes'
+import { useRouteMatch } from "react-router-dom";
 
 
-function Advanced(){
+function Advanced(props){
     let match = useRouteMatch();
-    return (
-        <div>{SwitchCategory(match.url)}</div>
-    )
+
+    if (props.location.state != null)
+        return (
+            <div>{SwitchCategory(match.url)}</div>
+        )
+    else
+        return (
+            <UserStatus category="category3" />
+        )
 }
 
 export default Advanced;

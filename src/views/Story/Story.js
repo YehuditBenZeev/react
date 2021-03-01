@@ -66,7 +66,7 @@ class StoryPage extends Component {
             this.setState({story_links: list});  
             this.setState({story_state: story_st});
             this.setState({story_count:  getMapSize(list)});
-            // this.setState({loading: false})
+            this.setState({loading: false})
         })
     }
 

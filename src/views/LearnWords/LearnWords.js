@@ -41,7 +41,9 @@ class LearnWords extends Component {
             list = list_words;
         }).then(() => {
             this.setState({words: sortMapByKey(list.words)});
-            this.setState({grammerWords: list.grammerWords});
+            if(this.props.location.state === "category3"){
+                this.setState({grammerWords: list.grammerWords});
+            }
 
             firebaseService.getHoldingWordsByCategoryForUser(this.props.location.state)
             .then(function(count) {
@@ -105,7 +107,7 @@ class LearnWords extends Component {
                 this.setState({nextDisabled: true});
             }
             var next  = this.state.relativeHoldoingWord + 1;
-            if(this.state.realHoldoingWord == this.state.relativeHoldoingWord){
+            if(this.state.realHoldoingWord === this.state.relativeHoldoingWord){
                 firebaseService.setHoldingWordsByCategoryForUser(this.props.location.state, next)
                 this.setState({realHoldoingWord: next});
             }
@@ -132,9 +134,9 @@ class LearnWords extends Component {
             maxWidth: 500,
         };
 
-        //for category 3 we add the grammer words to the card
+        //for category 3 we add the grammer words if exist
         var grammerList = null;
-        if(this.props.location.state === 'category3'){ 
+        if(this.props.location.state === 'category3' && this.state.grammerWords[Object.keys(this.state.words)[this.state.relativeHoldoingWord-1]] !== undefined){ 
             grammerList = Object.keys(this.state.grammerWords[Object.keys(this.state.words)[this.state.relativeHoldoingWord-1]]).map((key) => ( 
                 <ListItem>
                     <ListItemText

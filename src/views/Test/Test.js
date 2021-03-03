@@ -20,7 +20,10 @@ class Test extends Component {
         correctAnswer: 0,
         clickedAnswer: 0,
         step: 0,
-        score: 0
+        score: 0,
+        grade: 0,
+        continueToTest: true,
+        lastGrade: 0
     }
 
     componentDidMount() {
@@ -28,6 +31,14 @@ class Test extends Component {
         var quiestions_list = {};
         var answers_list = {1: {}, 2: {}, 3: {}, 4: {}};
         var correctAnswers_list = {};
+
+        //to know if the user already did the test
+        const userStatus = firebaseService.user[this.props.location.state];
+        if (userStatus.test != -1){
+            this.setState({continueToTest: false});
+            this.setState({lastGrade: userStatus.test});
+        }
+
         //get words from DB
         firebaseService.getWordsByCategory(this.props.location.state)
         .then(function(list_words) {
@@ -93,17 +104,40 @@ class Test extends Component {
         });
         //after answering the last qustion, need to update the user grade
         if (this.state.step === getMapSize(this.state.quiestions)){
-            var grade = (this.state.score * (100 / Object.keys(this.state.quiestions).length)).toFixed(2);
-            firebaseService.setGradeByCategoryForUser(this.props.location.state, grade)
+            var new_grade = (this.state.score * (100 / Object.keys(this.state.quiestions).length)).toFixed(2);
+            firebaseService.setGradeByCategoryForUser(this.props.location.state, new_grade)
+            this.setState({grade: new_grade});
         }
     }
 
     render(){
-        if (this.state.step == 0)
+        let { quiestions, answers, correctAnswer, clickedAnswer, step, score, grade, continueToTest, lastGrade } = this.state;
+
+        //wait till all data is loaded
+        if (step == 0)
             return null;
 
-        let { quiestions, answers, correctAnswer, clickedAnswer, step, score } = this.state;
-        var grade = (score * (100 / Object.keys(quiestions).length)).toFixed(2);
+        //if the user alredy did the test at the past
+        if (!continueToTest){
+            return (
+                <div className='p-48'>
+                    <CardHeader color='info'  >
+                        <h5>נבחנת בקטגוריה זו. הציון שלך הוא: {lastGrade}%  האם ברצונך לעשות שוב את המבחן?</h5>
+                        <RegularButton 
+                            variant="contained"
+                            color="info"
+                            onClick={() => {
+                                this.setState({continueToTest: true});
+                            }} 
+                            disabled={false}>
+                            כן
+                        </RegularButton>
+                    </CardHeader>
+                </div>
+            );
+        }
+ 
+        //to do the test
         return(
             <GridContainer > <GridItem xs={12} sm={12} md={8} direction='row'> <Card>
                 {step <= Object.keys(quiestions).length ? 

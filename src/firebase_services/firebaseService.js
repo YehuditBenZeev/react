@@ -220,6 +220,13 @@ class FirebaseService {
             }, { merge: true });
     }
 
+        //set holding Story index by category for specific user
+        setHoldingGameByCategoryForUser = (category, newValue) => {
+            this.userRef.set({
+                [category]: {game: newValue}
+            },{ merge: true });
+        }
+
    
      //get story links by category
      getStoryByCategory = (category) => {

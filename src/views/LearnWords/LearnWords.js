@@ -13,19 +13,7 @@ import CardHeader from '../../components/Card/CardHeader';
 import RegularButton from '../../components/CustomButtons/Button'
 import Card from "../../components/Card/Card";
 import CardIcon from "../../components/Card/CardIcon";
-
-//get map size
-function getMapSize(x) {
-    var len = 0;
-    for (var count in x)
-        len++;
-    return len;
-}
-
-//sort map by key
-function sortMapByKey(o) {
-    return Object.keys(o).sort().reduce((r, k) => (r[k] = o[k], r), {});
-}
+import {sortMapByKey, getMapSize} from "../../global.js";
 
 //this componnent is a layout for the Learn Words page
 class LearnWords extends Component {

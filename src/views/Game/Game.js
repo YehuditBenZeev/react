@@ -5,6 +5,7 @@ import frontImg from 'assets/img/Game/clipart2.png'
 import 'assets/css/Game.css'
 import firebaseService from 'firebase_services/firebaseService';
 import {Component} from 'react';
+import {getMapSize} from "../../global.js";
 
 
 class Game extends Component {
@@ -100,14 +101,6 @@ function suffle(arr) {
     arr[randomIdx] = copyCurrent
   }
   return arr
-}
-
-function getMapSize(x) {
-    var len = 0;
-    for (var count in x) {
-            len++;
-    }
-    return len;
 }
 
 function dictionaryToList (dict) {

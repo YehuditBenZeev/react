@@ -1,6 +1,6 @@
-import React, { useContext } from "react";
+import React, { useState, useEffect } from "react";
 import ChartistGraph from "react-chartist";
-import { makeStyles } from "@material-ui/core/styles";
+import { Typography } from "@material-ui/core";
 import Icon from "@material-ui/core/Icon";
 import Store from "@material-ui/icons/Store";
 import Warning from "@material-ui/icons/Warning";
@@ -15,17 +15,7 @@ import Code from "@material-ui/icons/Code";
 import Cloud from "@material-ui/icons/Cloud";
 import GridItem from "components/Grid/GridItem.js";
 import GridContainer from "components/Grid/GridContainer.js";
-import Table from "components/Table/Table.js";
-import Tasks from "components/Tasks/Tasks.js";
-import CustomTabs from "components/CustomTabs/CustomTabs.js";
-import Danger from "components/Typography/Danger.js";
-import Card from "components/Card/Card.js";
-import CardHeader from "components/Card/CardHeader.js";
-import CardIcon from "components/Card/CardIcon.js";
-import CardBody from "components/Card/CardBody.js";
-import CardFooter from "components/Card/CardFooter.js";
-import { UserContext } from "../../userProvider";
-import firebaseService from "firebase_services/firebaseService"
+import firebaseService from "../../firebase_services/firebaseService"
 import LinearProgressWithLabel from 'components/LinearProgress/LinearProgressWithLabel';
 
 import {
@@ -36,38 +26,107 @@ import {
 
 import styles from "assets/jss/material-dashboard-react/views/dashboardStyle.js";
 
-const useStyles = makeStyles(styles);
+// const useStyles = makeStyles(styles);
 
 export default function Dashboard(props) {
+
+  const [wordsLength, setWordsLength] = useState([0, 0, 0, 0]);
+  const [storiesLength, setStoriesLength] = useState([0, 0, 0, 0]);
+  const [userData, setUserData] = useState({game: -1, story: -1, words: -1, test: -1});
+  const userStatus = firebaseService.user
+  // const { text, data } = getNameCategory(subCategory)
+
+  useEffect(
+    () => {
+      for (let i = 1; i <= 4; i++) {
+        firebaseService.getWordsStoriesLength(`category${i}`).then(storiesWords => {
+          var storiesCategory = storiesLength;
+          storiesCategory[i - 1] = storiesWords.story
+          setStoriesLength(storiesCategory);
+          var wordsCategory = wordsLength;
+          wordsCategory[i - 1] = storiesWords.word
+          setWordsLength(wordsCategory);
+        })
+      }
+      console.log(wordsLength);
+      console.log(storiesLength);
+    },
+  );
+
+  function totalWords(){
+    let userWords = userStatus['category1'].holdingWords + userStatus['category2'].holdingWords + userStatus['category3'].holdingWords + userStatus['category4'].holdingWords
+    let percentWords = (userWords * 100) / (wordsLength[0] + wordsLength[1] + wordsLength[2] + wordsLength[3])
+    console.log(percentWords);
+    return percentWords
+  }
+
+  function totalStories(){
+    let userStories = userStatus['category1'].holdingStory + userStatus['category2'].holdingStory + userStatus['category3'].holdingStory + userStatus['category4'].holdingStory
+    let percentStories = (userStories * 100) / (storiesLength[0] + storiesLength[1] + storiesLength[2] + storiesLength[3])
+    console.log(percentStories);
+    return percentStories
+  }
+
+  function totalGames(){
+    let userGames = 0;
+    for(let i = 1; i <= 4; i ++){
+      userGames += userStatus[`category${i}`].game ?? 1 
+    }
+    // let userStories =  + userStatus['category2'].holdingStory + userStatus['category3'].holdingStory + userStatus['category4'].holdingStory
+    let percentGames = (userGames * 100) / 4
+    console.log(percentGames);
+    return percentGames
+  }
+
+  function totalTests(){
+    let userTests = 0;
+    for (let i = 1; i <= 4; i++) {
+      userTests += userStatus[`category${i}`].test != -1 ?? 1
+    }
+    // let userStories =  + userStatus['category2'].holdingStory + userStatus['category3'].holdingStory + userStatus['category4'].holdingStory
+    let percentTests = (userTests * 100) / 4
+    console.log(percentTests);
+    return percentTests
+  }
+
+
   // const user = useContext(UserContext);
-  const classes = useStyles();
+  // const classes = useStyles();
   return (
     <div>
-            <GridContainer>
-        <GridItem xs={12} sm={10} md={10}>
-        <LinearProgressWithLabel value="25" />
-
-        </GridItem>
-        </GridContainer>
       <GridContainer>
         <GridItem xs={12} sm={10} md={10}>
-          <LinearProgressWithLabel value="25" />
-
+          <LinearProgressWithLabel value={totalWords()} />
+        </GridItem>
+        <GridItem xs={12} sm={10} md={10}>
+          <Typography>סך מילים שנלמדו</Typography>
         </GridItem>
       </GridContainer>
       <GridContainer>
         <GridItem xs={12} sm={10} md={10}>
-          <LinearProgressWithLabel value="25" />
-
+          <LinearProgressWithLabel value={totalStories()} />
+        </GridItem>
+        <GridItem xs={12} sm={10} md={10}>
+          <Typography>סיפורים שנקראו</Typography>
         </GridItem>
       </GridContainer>
       <GridContainer>
         <GridItem xs={12} sm={10} md={10}>
-          <LinearProgressWithLabel value="25" />
-
+          <LinearProgressWithLabel value={totalGames()} />
+        </GridItem>
+        <GridItem xs={12} sm={10} md={10}>
+          <Typography>משחקים ששוחקו</Typography>
         </GridItem>
       </GridContainer>
-  
+      <GridContainer>
+        <GridItem xs={12} sm={10} md={10}>
+          <LinearProgressWithLabel value={totalTests()} />
+        </GridItem>
+        <GridItem xs={12} sm={10} md={10}>
+          <Typography>מבחנים שנעשו</Typography>
+        </GridItem>
+      </GridContainer>
+
     </div>
   );
 }

@@ -299,6 +299,8 @@ class FirebaseService {
                     wordsStories['word'] = Object.keys(word.data().words).length;
                     resolve(wordsStories);
                 })
+            }).catch(error => {
+                console.log(error);
             })
         })
     }

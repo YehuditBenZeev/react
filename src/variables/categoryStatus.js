@@ -69,7 +69,7 @@ function CategoryStatus(props) {
 
 
     return (
-        <GridItem xs={4} sm={4} md={4} lg={3}>
+        <GridItem xs={8} sm={8} md={8} lg={3}>
             
             <Link
                 component={RouterLink}
@@ -79,7 +79,7 @@ function CategoryStatus(props) {
                 <Card hoverable>
                 <CardHeader color="info">
                     <div className="sm:center text-center pt-82 center block">
-                        <Info style={{ fontSize: "5.2vw" }} variant="h2" component="h2"
+                        <Info style={{ fontSize: "4.7vw" }} variant="h2" component="h2"
                             className="text-72 leading-none text-white">{data}
                         </Info>
                         </div>

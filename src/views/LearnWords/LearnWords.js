@@ -45,6 +45,7 @@ class LearnWords extends Component {
             words: {},
             grammerWords: {},
             count: 0,
+            realHoldoingWord: 0,
             wordsLength: 0,
             previousDisabled: false,
             nextDisabled: false
@@ -67,12 +68,19 @@ class LearnWords extends Component {
 
             firebaseService.getHoldingWordsByCategoryForUser(this.props.location.state)
             .then(function(count) {
-                holdingWord = count;
+                holdingWord = count; 
             })
             .then(() => {
+                
+                if(holdingWord === 0){
+                    holdingWord++;
+                    firebaseService.setHoldingWordsByCategoryForUser(this.props.location.state, holdingWord)
+                }
+
                 var wordsListLength = getMapSize(list.words);
                 // to show the word that the user is holding on
                 this.setState({count: holdingWord});
+                this.setState({realHoldoingWord: holdingWord});
 
                 //disable previous or next buttons if needed
                 //first word - could not press previous now
@@ -86,6 +94,8 @@ class LearnWords extends Component {
 
                 //only now we will set the size, this will also indecate to show to screen
                 this.setState({wordsLength: wordsListLength});
+
+
             })
         })
     }
@@ -103,7 +113,7 @@ class LearnWords extends Component {
                 this.setState({previousDisabled: true});
             }
             var previous  = this.state.count -1;
-            firebaseService.setHoldingWordsByCategoryForUser(this.props.location.state, previous)
+            //firebaseService.setHoldingWordsByCategoryForUser(this.props.location.state, previous)
             this.setState({count: previous});
         }
     }
@@ -121,8 +131,11 @@ class LearnWords extends Component {
                 this.setState({nextDisabled: true});
             }
             var next  = this.state.count + 1;
+            if(this.state.realHoldoingWord == this.state.count){
+                firebaseService.setHoldingWordsByCategoryForUser(this.props.location.state, next)
+                this.setState({realHoldoingWord: next});
+            }
             this.setState({count: next});
-            firebaseService.setHoldingWordsByCategoryForUser(this.props.location.state, next)
         }
     }
 
@@ -148,10 +161,10 @@ class LearnWords extends Component {
 
         //for category 3 we add the grammer words
         if(this.props.location.state === 'category3'){ 
-            grammerList = Object.keys(this.state.grammerWords[Object.keys(this.state.words)[this.state.count]]).map((key) => ( 
+            grammerList = Object.keys(this.state.grammerWords[Object.keys(this.state.words)[this.state.count-1]]).map((key) => ( 
                 <ListItem>
                     <ListItemText
-                    primary={this.state.grammerWords[Object.keys(this.state.words)[this.state.count]][key] + " = " + key}
+                    primary={this.state.grammerWords[Object.keys(this.state.words)[this.state.count-1]][key] + " = " + key}
                     />
                     <CardIcon>
                         <PriorityHighIcon />
@@ -174,9 +187,9 @@ class LearnWords extends Component {
                         </CardActions>
                         {  
                             <h3>    
-                                {"מילה: " + Object.keys(this.state.words)[this.state.count]}       
+                                {"מילה: " + Object.keys(this.state.words)[this.state.count-1]}       
                                 <br />
-                                {"תרגום: " + this.state.words[Object.keys(this.state.words)[this.state.count]]}
+                                {"תרגום: " + this.state.words[Object.keys(this.state.words)[this.state.count-1]]}
                                 <br />
                                 <List dense={true}>{grammerList}</List>
                             </h3>

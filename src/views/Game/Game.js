@@ -85,7 +85,7 @@ async function buildCards(listWords) {
 
     console.log("INSIDE buildCards FUNC. cards: ", cards)
 
-    // return suffle(cards) 
+    return suffle(cards) 
     return cards
 }
 

@@ -50,7 +50,7 @@ function CategoryStatus(props) {
             case 'story':
                 return {text:  "סיפור", data: `${userStatus.holdingStory}/${storiesLength}`}
             case 'test':
-                return { text: "מבחן", data: `${userStatus.test == -1 ? "0%" : userStatus.test}`}
+                return { text: "מבחן", data: `${userStatus.test == -1 ? "0%" : userStatus.test + "%"}`}
         }
     }
 

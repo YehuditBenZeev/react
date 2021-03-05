@@ -19,18 +19,7 @@ import Card from "../../components/Card/Card";
 import CardIcon from "../../components/Card/CardIcon";
 import GridItem from "components/Grid/GridItem";
 import GridContainer from "components/Grid/GridContainer";
-
-
-// get map size
-function getMapSize(x) {
-    var len = 0;
-    console.log("x , ", x)
-    for (var count in x) {
-            len++;
-    }
-    console.log("len ,", len);
-    return len;
-}
+import {getMapSize} from "../../global.js";
 
 
 class StoryPage extends Component {  

@@ -192,6 +192,34 @@ class FirebaseService {
             }, { merge: true });
     }
 
+    //set user grade by category for specific user
+    setGradeByCategoryForUser = async (category, newValue) => {
+        if(category == "category1")
+            await this.userRef.set({
+                category1: {
+                    test: newValue,
+                }
+            }, { merge: true });
+        else if(category == "category2")
+            await this.userRef.set({
+                category2: {
+                    test: newValue,
+                }
+            }, { merge: true });
+        else if(category == "category3")
+            await this.userRef.set({
+                category3: {
+                    test: newValue,
+                }
+            }, { merge: true });
+        else if(category == "category4")
+            await this.userRef.set({
+                category4: {
+                    test: newValue,
+                }
+            }, { merge: true });
+    }
+
     //set holding Story index by category for specific user
     setHoldingStoryByCategoryForUser = (category, newValue) => {
         if(category == "category1")

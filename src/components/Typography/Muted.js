@@ -9,9 +9,10 @@ const useStyles = makeStyles(styles);
 
 export default function Muted(props) {
   const classes = useStyles();
-  const { children } = props;
+  const { children, fontSize } = props;
+
   return (
-    <div className={classes.defaultFontStyle + " " + classes.mutedText}>
+    <div className={classes.defaultFontStyle + " " + classes.mutedText} style={{ fontSize: fontSize ?? fontSize }}>
       {children}
     </div>
   );

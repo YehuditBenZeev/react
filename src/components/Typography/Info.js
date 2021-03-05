@@ -9,9 +9,9 @@ const useStyles = makeStyles(styles);
 
 export default function Info(props) {
   const classes = useStyles();
-  const { children } = props;
+  const { children, fontSize } = props;
   return (
-    <div className={classes.infoText}>
+    <div className={classes.infoText} style = {{fontSize: fontSize ?? fontSize}}>
       {children}
     </div>
   );

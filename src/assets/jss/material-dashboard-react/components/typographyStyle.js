@@ -34,7 +34,8 @@ const typographyStyle = {
     color: grayColor[1]
   },
   mutedText: {
-    color: grayColor[1]
+    color: grayColor[1],
+    fontSize: "3vw",
   },
   primaryText: {
     color: primaryColor[0]
@@ -42,7 +43,7 @@ const typographyStyle = {
   infoText: {
     color: infoColor[0],
     display: "block",
-    fontSize: "5.2vw",
+    fontSize: "4.2vw",
     lineHeight: "1.42857143",
   },
   successText: {

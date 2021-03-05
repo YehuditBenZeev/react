@@ -12,12 +12,11 @@ import {
 const StyledLinearProgress = withStyles({
   colorPrimary: {
     // backgroundColor: "white",
-    height: '3vw',
-    borderRadius: '25px'
+    // height: '3vw',
+    // borderRadius: '25px'
   },
   barColorPrimary: {
     backgroundColor: infoColor[2],
-    borderRadius: '25px'
   },
 })(LinearProgress);
 
@@ -33,59 +32,40 @@ const theme = createMuiTheme({
   },
 });
 
-function LinearProgressWithLabel(props) {
+function LinearWithValueLabel(props) {
   return (
     <ThemeProvider theme={theme}>
       <div dir="rtl">
-    <Box display="flex" alignItems="center">    
-      <Box minWidth={35}>
-        <Typography variant="body2" color="textSecondary">{`${Math.round(
-          props.value,
-        )}%`}</Typography>
-      </Box>
-      <Box width="100%" mr={1}>
-        <StyledLinearProgress variant="determinate" {...props} />
-
-        {/* <LinearProgress variant="determinate" {...props} /> */}
-      </Box>
-
-    </Box>
+        <LinearProgress />
     </div>
     </ThemeProvider>
   );
 }
 
-LinearProgressWithLabel.propTypes = {
-  /**
-   * The value of the progress indicator for the determinate and buffer variants.
-   * Value between 0 and 100.
-   */
-  value: PropTypes.number.isRequired,
-};
+export default LinearWithValueLabel;
 
-const useStyles = makeStyles({
-  root: {
-    width: '100%',
-  },
-});
+// LinearProgressWithLabel.propTypes = {
+//   /**
+//    * The value of the progress indicator for the determinate and buffer variants.
+//    * Value between 0 and 100.
+//    */
+//   value: PropTypes.number.isRequired,
+// };
 
-export default function LinearWithValueLabel(props) {
-  const classes = useStyles();
-  const progress = props.value
-//   const [progress, setProgress] = React.useState(10);
+// const useStyles = makeStyles({
+//   root: {
+//     width: '100%',
+//   },
+// });
 
-//   React.useEffect(() => {
-//     const timer = setInterval(() => {
-//       setProgress((prevProgress) => (prevProgress >= 100 ? 10 : prevProgress + 10));
-//     }, 800);
-//     return () => {
-//       clearInterval(timer);
-//     };
-//   }, []);
+// export default function LinearWithValueLabel(props) {
+//   const classes = useStyles();
+//   const progress = props.value
 
-  return (
-    <div className={classes.root}>
-      <LinearProgressWithLabel value={progress} />
-    </div>
-  );
-}
+
+//   return (
+//     <div className={classes.root}>
+//       <<LinearProgress />
+//     </div>
+//   );
+// }

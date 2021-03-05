@@ -20,10 +20,10 @@ class Test extends Component {
         correctAnswer: 0,
         clickedAnswer: 0,
         step: 0,
-        score: 0,
         grade: 0,
         continueToTest: true,
-        lastGrade: 0
+        lastGrade: 0,
+        score: 0
     }
 
     componentDidMount() {
@@ -31,10 +31,11 @@ class Test extends Component {
         var quiestions_list = {};
         var answers_list = {1: {}, 2: {}, 3: {}, 4: {}};
         var correctAnswers_list = {};
+        var correctRandom = 0;
 
         //to know if the user already did the test
         const userStatus = firebaseService.user[this.props.location.state];
-        if (userStatus.test != -1){
+        if (userStatus.test !== -1){
             this.setState({continueToTest: false});
             this.setState({lastGrade: userStatus.test});
         }
@@ -51,7 +52,7 @@ class Test extends Component {
                 var keys = [Object.keys(list.words)[i*3-1], 
                             Object.keys(list.words)[i*3-2], 
                             Object.keys(list.words)[i*3-3] ];
-                var correctRandom = getRandomInt(3)
+                correctRandom = getRandomInt(3)
                 quiestions_list[i] = "בחר את התרגום הנכון של \"" + keys[correctRandom] + "\" לעברית:";
                 correctAnswers_list[i] = "" + (correctRandom + 1);
                 answers_list[i] = { 1: list.words[keys[0]],
@@ -59,10 +60,10 @@ class Test extends Component {
                                     3: list.words[keys[2]] }
             }
             for (j = 1; j <= ((wordsListLength - (wordsListLength % 3)) / 3 ); j++) {
-                var keys = [Object.keys(list.words)[j*3-1], 
+                keys = [Object.keys(list.words)[j*3-1], 
                             Object.keys(list.words)[j*3-2], 
                             Object.keys(list.words)[j*3-3] ];
-                var correctRandom = getRandomInt(3)
+                correctRandom = getRandomInt(3)
                 quiestions_list[i+j-1] = "בחר את התרגום הנכון של \"" + list.words[keys[correctRandom]] + "\" לאנגלית:";
                 correctAnswers_list[i+j-1] = "" + (correctRandom + 1);
                 answers_list[i+j-1] = { 1: keys[0],
@@ -87,7 +88,7 @@ class Test extends Component {
                 correctAnswer: correctAnswers[step],
                 clickedAnswer: answer
             });
-        }else{
+        }else{ //worng answer
             this.setState({
                 correctAnswer: 0,
                 clickedAnswer: answer
@@ -111,10 +112,10 @@ class Test extends Component {
     }
 
     render(){
-        let { quiestions, answers, correctAnswer, clickedAnswer, step, score, grade, continueToTest, lastGrade } = this.state;
+        let { quiestions, answers, correctAnswer, clickedAnswer, step, grade, continueToTest, lastGrade } = this.state;
 
         //wait till all data is loaded
-        if (step == 0)
+        if (step === 0)
             return null;
 
         //if the user alredy did the test at the past
@@ -185,4 +186,5 @@ class Test extends Component {
         );
     }
 }
+
 export default Test;

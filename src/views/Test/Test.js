@@ -9,6 +9,7 @@ import CardFooter from '../../components/Card/CardFooter';
 import RegularButton from '../../components/CustomButtons/Button'
 import Card from "../../components/Card/Card";
 import {getMapSize, getRandomInt} from "../../global.js";
+import LinearProgressWithLabel from 'components/LinearProgress/LinearProgressWithLabel';
 
 
 class Test extends Component {
@@ -116,7 +117,9 @@ class Test extends Component {
 
         //wait till all data is loaded
         if (step === 0)
-            return null;
+            return (
+                <LinearProgressWithLabel />
+            )
 
         //if the user alredy did the test at the past
         if (!continueToTest){

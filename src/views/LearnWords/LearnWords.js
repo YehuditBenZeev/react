@@ -171,7 +171,7 @@ class LearnWords extends Component {
                 <CircularLoader />
             :
             <GridContainer>
-                <GridItem xs={12} sm={12} md={8} direction='row'>        
+                <GridItem xs={8} sm={8} md={8} direction='row'>        
                     <Card style={styles}>
                         <div className="content" style={styles}>
                             <CardActions style={styles}>
@@ -180,7 +180,7 @@ class LearnWords extends Component {
                                 </CardHeader>
                             </CardActions>
                             {  
-                                <h3>    
+                                <h3 className='px-8'>    
                                     {"מילה: " + Object.keys(this.state.words)[this.state.count]}       
                                     <br />
                                     {"תרגום: " + this.state.words[Object.keys(this.state.words)[this.state.count]]}

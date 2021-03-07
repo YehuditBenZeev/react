@@ -1,6 +1,5 @@
 import history from "./_history";
-import './App.css';
-import { Router, Route, Switch, Redirect } from "react-router-dom";
+import { Router, Route, Redirect } from "react-router-dom";
 import Registration from "./layouts/Registration.js";
 import Admin from "./layouts/Admin.js";
 import React, { useContext } from "react";

@@ -1,6 +1,8 @@
-# Getting Started with Create React App
+# "בואו נלמד אגלית" - React app
 
-This website 'בואו למד אגלית' was created by Yehudit Ben Beev, Sara Borowski, Dassi Krakinovski and Tamar Cohen.  
+This website 'בואו נלמד אגלית' was created by Yehudit Ben Zeev, Sara Borowski, Dassi Krakinovski and Tamar Cohen.  
+
+##  How to build and run:
 
 ### `yarn start` 
 will run the website in the development mode.\

@@ -1,6 +1,5 @@
 import React from 'react';
 import './Question.css';
-import CardHeader from '../../../components/Card/CardHeader';
 
 const Question = (props) => {
     return (

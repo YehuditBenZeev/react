@@ -10,7 +10,7 @@ import Begginers from "views/Begginers/Begginers.js";
 const dashboardRoutes = [
   {
     path: "/dashboard",
-    name: "מסך ראשי",
+    // name: "מסך ראשי",
     icon: Dashboard,
     component: DashboardPage,
     layout: "/admin"

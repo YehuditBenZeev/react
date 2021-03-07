@@ -5,7 +5,8 @@ import School from "@material-ui/icons/School";
 import Begginers from "views/Begginers/Begginers.js";
 import LearnWords from "views/LearnWords/LearnWords";
 import Test from "views/Test/Test";
-import StoryPage from 'views/Story/story.js'
+import StoryPage from 'views/Story/Story.js'
+import Game from 'views/Game/Game'
 
 import {
   Switch, Route, useRouteMatch,
@@ -32,7 +33,7 @@ const categoryRoutes = [
       path: "/game",
       name: "משחק",
       icon: Games,
-      component: Begginers,
+      component: Game,
       layout: "/admin"
     },
     {

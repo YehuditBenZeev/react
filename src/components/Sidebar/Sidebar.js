@@ -2,7 +2,7 @@ import React from "react";
 import classNames from "classnames";
 import PropTypes from "prop-types";
 import { NavLink } from "react-router-dom";
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles, Link } from "@material-ui/core";
 import Drawer from "@material-ui/core/Drawer";
 import Hidden from "@material-ui/core/Hidden";
 import List from "@material-ui/core/List";
@@ -14,6 +14,10 @@ import history from '_history';
 import firebaseService from '../../firebase_services/firebaseService'
 import styles from "assets/jss/material-dashboard-react/components/sidebarStyle.js";
 import { Person } from "@material-ui/icons";
+import logo from 'assets/img/logo.png'
+import { Link as RouterLink } from 'react-router-dom';
+
+
 
 const useStyles = makeStyles(styles);
 
@@ -78,6 +82,7 @@ export default function Sidebar(props) {
         const whiteFontClasses = classNames({
           [" " + classes.whiteFont]: activeRoute(prop.layout + prop.path)
         });
+        if (key != 0)
         return (
           <NavLink
           to={{ pathname: prop.layout + prop.path, state: prop.path }}
@@ -146,10 +151,19 @@ export default function Sidebar(props) {
   );
   var brand = (
     <div className={classes.logo}>
-      <b className={classNames(classes.logoLink, {
-        [classes.logoLinkRTL]: true
-      })}>{logoText}</b>
-
+      <Link        
+      className={classNames(classes.logoLink, {
+          [classes.logoLinkRTL]: props.rtlActive
+        })}
+        component={RouterLink}
+        underline='none'
+        to={{ pathname: `/admin/dashboard`}}
+      >
+        <div className={classes.logoImage}>
+          <img src={logo} alt="logo" className={classes.img} />
+        </div>
+        {logoText}
+      </Link>
     </div>
   );
 

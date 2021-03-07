@@ -1,18 +1,6 @@
-import React, { Component } from 'react';
-import { withStyles } from '@material-ui/core/styles';
-// import { LinearProgress } from '@material-ui/core';
-import classNames from "classnames";
-import PropTypes from "prop-types";
-
-// import styles from "assets/jss/material-dashboard-react/components/cardStyle.js";
-
+import React from 'react';
 import styles from "assets/jss/material-dashboard-react/layouts/registerStyle.js";
-// import { makeStyles } from "@material-ui/core/styles";
-import LinearProgress from "@material-ui/core/LinearProgress";
-
 import { makeStyles } from "@material-ui/core/styles";
-import { UserContext } from "../../userProvider";
-// const useStyles = makeStyles(styles);
 import { CircularProgress } from '@material-ui/core';
 
 // const classes = useStyles();
@@ -29,11 +17,3 @@ export default function CircularLoader(props) {
     );
 }
 
-// const StyledLinearProgress = withStyles({
-//     colorPrimary: {
-//       backgroundColor: "#FFF"
-//     },
-//     barColorPrimary: {
-//       backgroundColor: "#007887"
-//     }
-//   })(LinearProgress);

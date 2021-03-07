@@ -44,11 +44,6 @@ class Auth extends Component {
 
                     console.log({message: 'Logged in with Firebase'});
                     resolve();
-                    
-                // }, error => {
-
-                //     resolve();
-                // })
             }
             else{
                 resolve();

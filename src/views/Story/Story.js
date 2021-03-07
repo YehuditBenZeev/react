@@ -1,39 +1,11 @@
 import React from 'react';
-import { useState, useEffect } from 'react';
 import firebaseService from '../../firebase_services/firebaseService';
-// import SignedApp from './SignedApp';
 import {Component} from 'react';
-import { CircularProgress , LinearProgress} from '@material-ui/core';
-// import ImageCard from './DisplayImage';
-// import {  } from "DisplayImage";
-
-//import Card from '@material-ui/core/Card';
-import CardActionArea from '@material-ui/core/CardActionArea';
-import CardActions from '@material-ui/core/CardActions';
 import CardMedia from '@material-ui/core/CardMedia';
 import RegularButton from '../../components/CustomButtons/Button'
-//import story_button from '../../assets/css/material-dashboard-react.css'
-import CardHeader from '../../components/Card/CardHeader';
-import CardFooter from '../../components/Card/CardFooter';
 import Card from "../../components/Card/Card";
-import CardIcon from "../../components/Card/CardIcon";
-import GridItem from "components/Grid/GridItem";
-import GridContainer from "components/Grid/GridContainer";
-import CircularLoader from 'components/Loader/CircularLoader'
-
-
-
-// get map size
-function getMapSize(x) {
-    var len = 0;
-    console.log("x , ", x)
-    for (var count in x) {
-            len++;
-    }
-    console.log("len ,", len);
-    return len;
-}
-
+import {getMapSize} from "../../global.js";
+import LinearProgressWithLabel from 'components/LinearProgress/LinearProgressWithLabel';
 
 class StoryPage extends Component {  
     
@@ -47,9 +19,7 @@ class StoryPage extends Component {
             finished_to_raed: false,
             loading: true
         };
-        // this.get_next_story = this.get_next_story.bind(this);
-        // this.finished_story= this.finished_story.bind(this);
-    
+
     }
 
     componentDidMount() {
@@ -76,7 +46,6 @@ class StoryPage extends Component {
         await  this.setState({get_story: false});
         var next  = this.state.story_state + 1;
        
-        console.log(firebaseService.user[this.props.location.state]["holdingStory"])
         if (firebaseService.user[this.props.location.state]["holdingStory"] < this.state.story_count)
             firebaseService.setHoldingStoryByCategoryForUser(this.props.location.state, next)
     }
@@ -96,14 +65,19 @@ class StoryPage extends Component {
 
 
     render() {
+        if (this.state.loading) {
+            return(
+                <LinearProgressWithLabel />
+            )
+        }
         var is_last = this.state.story_count - 1 == this.state.story_state ? true : false;
         var link = this.state.story_links[this.state.story_state];
         var story_name = "story ".concat(this.state.story_state);
 
         return (
-            this.state.loading ? 
-                <CircularLoader />
-            :
+            // this.state.loading ? 
+            //     <CircularLoader />
+            // :
             <Card>
                 <div className='p-48'>
                 

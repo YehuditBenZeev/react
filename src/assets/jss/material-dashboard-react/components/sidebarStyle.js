@@ -85,9 +85,13 @@ const sidebarStyle = theme => ({
     fontWeight: "400",
     lineHeight: "30px",
     textDecoration: "none",
+    color: whiteColor,
     backgroundColor: "transparent",
-    "&,&:hover": {
-      color: whiteColor
+    "&:hover": {
+      color: infoColor[0],
+    },
+    "&:Focus": {
+      color: infoColor[0],
     }
   },
   logoLinkRTL: {

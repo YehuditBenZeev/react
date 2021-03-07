@@ -51,16 +51,9 @@ class Game extends Component {
 
 async function buildCards(listWords) {
     let id = 0
-    console.log("INSIDE buildCards FUNC. words: ", listWords)
-
     var shortDict = copyDictionary(listWords, 8)
-    console.log("INSIDE buildCards FUNC. SHORT DICT: ", shortDict)
-
-    var wordDict = Object.fromEntries(Object.entries(shortDict).slice(0, 16));
-    console.log("INSIDE buildCards FUNC. wordDict: ", (wordDict))
-    
+    var wordDict = Object.fromEntries(Object.entries(shortDict).slice(0, 16));    
     var newWordsDict = dictionaryToEmptyDict(wordDict)
-    console.log("newWordsDict Words", newWordsDict, newWordsDict.length)
 
     const cards = Object.keys(newWordsDict).reduce((result, item) => {
         const getCard = () => ({
@@ -73,8 +66,6 @@ async function buildCards(listWords) {
         })
         return [...result, getCard()]
     }, [])
-
-    console.log("INSIDE buildCards FUNC. cards: ", cards)
 
     return suffle(cards) 
     return cards

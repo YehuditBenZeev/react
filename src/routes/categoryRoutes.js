@@ -2,16 +2,11 @@ import LocalLibrary from "@material-ui/icons/LocalLibrary";
 import InsertDriveFile from "@material-ui/icons/InsertDriveFile";
 import Games from "@material-ui/icons/Games";
 import School from "@material-ui/icons/School";
-import Begginers from "views/Begginers/Begginers.js";
 import LearnWords from "views/LearnWords/LearnWords";
 import Test from "views/Test/Test";
 import StoryPage from 'views/Story/Story.js'
 import Game from 'views/Game/Game'
-
-import {
-  Switch, Route, useRouteMatch,
-  useParams
-} from "react-router-dom";
+import { Switch, Route,} from "react-router-dom";
 
 
 const categoryRoutes = [

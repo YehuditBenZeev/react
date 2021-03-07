@@ -1,20 +1,16 @@
 import React from 'react';
 import { useState, useRef, } from 'react';
 import firebaseService from 'firebase_services/firebaseService';
-import { Button, InputAdornment, Icon, Typography, Card, CardContent } from '@material-ui/core';
-import { Route, Link, Router, Redirect } from "react-router-dom";
-import Admin from "layouts/Admin.js";
+import { InputAdornment, Icon, Typography, Card, CardContent } from '@material-ui/core';
+import { Link, } from "react-router-dom";
 import CustomTextField from "components/CustomInput/CustomInput.js";
 import RegularButton from "components/CustomButtons/Button";
-import { createBrowserHistory } from "history";
 import Formsy from 'formsy-react';
-import ReactDOM from "react-dom";
 
   
 function Login() {
     const [isFormValid, setIsFormValid] = useState(false);
     const formRef = useRef(null);
-
 
     function disableButton() {
         setIsFormValid(false);
@@ -32,9 +28,7 @@ function Login() {
         })
     }
 
-
     return (
-
         <Card className="max-w-400 mx-auto m-16 md:m-0" style = {{backgroundColor: "transparent"}} square>
 
         <CardContent className="flex flex-col items-center justify-center p-32 md:p-48 md:pt-128 ">

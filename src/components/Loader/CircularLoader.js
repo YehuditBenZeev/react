@@ -3,7 +3,7 @@ import styles from "assets/jss/material-dashboard-react/layouts/registerStyle.js
 import { makeStyles } from "@material-ui/core/styles";
 import { CircularProgress } from '@material-ui/core';
 
-// const classes = useStyles();
+
 const useStyles = makeStyles(styles);
 
 export default function CircularLoader(props) {

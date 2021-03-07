@@ -65,7 +65,6 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-
 function OneCardStatus(props) {
   const classes = useStyles();
   const { category, user, wordsCount, storyCount, categoryName } = props;

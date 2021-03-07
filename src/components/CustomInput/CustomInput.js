@@ -2,10 +2,8 @@ import React from "react";
 import TextField from '@material-ui/core/TextField';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import { withFormsy } from 'formsy-react';
-import { lightBlue, red } from '@material-ui/core/colors';
-import {
-  infoColor,
-} from "assets/jss/material-dashboard-react.js";
+import { red } from '@material-ui/core/colors';
+import { infoColor, } from "assets/jss/material-dashboard-react.js";
 
 const theme = createMuiTheme({
   direction: 'rtl',
@@ -19,7 +17,6 @@ const theme = createMuiTheme({
     error: red
   },
 });
-
 
 function CustomTextField(props) {
   let { value, errorMessage, className, type, name, label, validations, validationErrors, InputProps, variant, required } = props;

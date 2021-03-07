@@ -4,6 +4,7 @@ import 'firebase/auth';
 import 'firebase/database';
 import 'firebase/firestore';
 
+
 // get user category data
 function getDataByCategory(category, data, user){
     if(category == "category1")

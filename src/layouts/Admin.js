@@ -11,8 +11,8 @@ import styles from "assets/jss/material-dashboard-react/layouts/rtlStyle.js";
 import bgImage from "assets/img/sidebar-2.jpg";
 import logo from "assets/img/reactlogo.png";
 
-let ps;
 
+let ps;
 
 const switchRoutes = (
   <Switch>
@@ -33,7 +33,7 @@ const switchRoutes = (
 const useStyles = makeStyles(styles);
 
 export default function Admin({ ...rest }) {
-  // styles
+
   const classes = useStyles();
   // ref to help us initialize PerfectScrollbar on windows devices
   const mainPanel = React.createRef();

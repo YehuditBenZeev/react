@@ -3,6 +3,7 @@ import GCard from './GCard'
 import 'assets/css/Board.css'
 import firebaseService from '../../firebase_services/firebaseService';
 
+
 var obj = {flippedCards: 0}
 
 const Board = props => {
@@ -71,7 +72,5 @@ const Board = props => {
     </div>
   )
 }
-
-
 
 export default Board

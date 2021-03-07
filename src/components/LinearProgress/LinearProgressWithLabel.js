@@ -1,17 +1,12 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import LinearProgress from '@material-ui/core/LinearProgress';
-
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
-import {
-  infoColor,
-} from "assets/jss/material-dashboard-react.js";
+import { infoColor, } from "assets/jss/material-dashboard-react.js";
+
 
 const StyledLinearProgress = withStyles({
   colorPrimary: {
-    // backgroundColor: "white",
-    // height: '3vw',
-    // borderRadius: '25px'
   },
   barColorPrimary: {
     backgroundColor: infoColor[2],

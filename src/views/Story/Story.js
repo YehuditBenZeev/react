@@ -75,9 +75,6 @@ class StoryPage extends Component {
         var story_name = "story ".concat(this.state.story_state);
 
         return (
-            // this.state.loading ? 
-            //     <CircularLoader />
-            // :
             <Card>
                 <div className='p-48'>
                 

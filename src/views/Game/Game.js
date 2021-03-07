@@ -10,8 +10,6 @@ import LinearProgressWithLabel from 'components/LinearProgress/LinearProgressWit
 
 
 class Game extends Component {
-
-
     constructor() {
         super();
         this.state = {
@@ -37,7 +35,6 @@ class Game extends Component {
         })        
     }
 
-
     render() {
         if (this.state.wordsLength < 8 || !this.state.cards.length) 
             return (
@@ -51,7 +48,6 @@ class Game extends Component {
         )
     }
 }
-
 
 async function buildCards(listWords) {
     let id = 0
@@ -83,7 +79,6 @@ async function buildCards(listWords) {
     return suffle(cards) 
     return cards
 }
-
 
 function suffle(arr) {
   let len = arr.length
@@ -131,8 +126,6 @@ function copyDictionary(dict, n) {
     }
     return newDict
 }
-
-
 
 export default Game
 

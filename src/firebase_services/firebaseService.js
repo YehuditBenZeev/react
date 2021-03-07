@@ -86,7 +86,7 @@ class FirebaseService {
 
                 const response = {
                     email: emailErrorCodes.includes(error.code) ? error.message : null,
-                    displayName: usernameErrorCodes.includes(error.code) ? error.message : null,
+                    username: usernameErrorCodes.includes(error.code) ? error.message : null,
                     password: passwordErrorCodes.includes(error.code) ? error.message : null
                 };
                 rej(response)
@@ -103,6 +103,7 @@ class FirebaseService {
                     resolve(user);
                 }).catch(err => {
                     reject(err)
+                })
                 }).catch(error => {
                     const usernameErrorCodes = [
                         'auth/email-already-in-use',
@@ -117,11 +118,10 @@ class FirebaseService {
                     ];
 
                     const response = {
-                        username: usernameErrorCodes.includes(error.code) ? error.message : null,
+                        email: usernameErrorCodes.includes(error.code) ? error.message : null,
                         password: passwordErrorCodes.includes(error.code) ? error.message : null
                     };
                     reject(response)
-                })
             })
         })
     }
@@ -267,16 +267,6 @@ class FirebaseService {
                 reject(error)
             })
         })
-
-        // return new Promise((resolve, reject) => {
-        //     this.db.collection('stories').doc(category).get().then((story) => {
-        //         console.log("getStoryByCategory ", story.data());
-        //         // console.log(story.data());
-        //         resolve(story.data());
-        //     }).catch((error) => {
-        //         reject(error)
-        //     })
-        // })
      }
 
     generateUserDocument = async (user, additionalData) => {

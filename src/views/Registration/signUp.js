@@ -1,5 +1,5 @@
 import React from 'react';
-import { useState, useRef, } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import firebaseService from 'firebase_services/firebaseService';
 import { Button, InputAdornment, Icon, Typography, Card, CardContent } from '@material-ui/core';
 import { Route, Link, Router, Redirect } from "react-router-dom";
@@ -13,7 +13,17 @@ import ReactDOM from "react-dom";
 function SignUp() {
     const [isFormValid, setIsFormValid] = useState(false);
     const formRef = useRef(null);
+    const [error, setError] = useState({ email: null, password: null })
 
+
+    useEffect(() => {
+        if (error && (error.email || error.password)) {
+            formRef.current.updateInputsWithError({
+                ...error
+            });
+            disableButton();
+        }
+    }, [error]);
 
     function disableButton() {
         setIsFormValid(false);
@@ -27,14 +37,17 @@ function SignUp() {
         firebaseService.UserSignUp(model).then((value) => {
             window.location.href = '/'
         }
-        ).catch(error => {
+        ).catch(err => {
+            console.log(err)
+            setError({ email: err.email, password: err.password });
+            console.log(error);
         })
     }
 
 
     return (
 
-        <Card className="max-w-400 mx-auto m-16 md:m-0" style={{ backgroundColor: "transparent" }} square>
+        <Card className="max-w-400 mx-auto m-16 md:m-0" style={{ borderRadius: 10 }} square>
 
             <CardContent className="flex flex-col items-center justify-center p-32 md:p-48 md:pt-128 ">
                 <Typography variant="h6" className="text-center md:w-full mb-48">ברוך הבא</Typography>

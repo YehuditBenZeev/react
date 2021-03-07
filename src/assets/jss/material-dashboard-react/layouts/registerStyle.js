@@ -34,8 +34,8 @@ const registerStyle = theme => ({
         backgroundPosition: "center center",
       },
       content:{
-        position: 'absolute', left: '50%', top: '30%',
-        transform: 'translate(-50%, -50%)'
+        position: 'absolute', left: '50%', top: '13%',
+        transform: 'translate(-50%, 0%)'
       },
       registerWrapper: {
         direction: "rtl",

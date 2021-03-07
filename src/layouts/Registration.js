@@ -4,7 +4,7 @@ import "perfect-scrollbar/css/perfect-scrollbar.css";
 import { makeStyles } from "@material-ui/core/styles";
 import routes from "../routes/registerRoute.js";
 import styles from "assets/jss/material-dashboard-react/layouts/registerStyle.js";
-import bgImage from "assets/img/sidebar-2.jpg";
+import bgImage from "assets/img/register.jpg";
 
 
 

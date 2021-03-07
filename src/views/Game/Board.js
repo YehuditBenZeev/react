@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react'
 import GCard from './GCard'
 import 'assets/css/Board.css'
 import firebaseService from '../../firebase_services/firebaseService';
+import CardHeader from '../../components/Card/CardHeader';
 
 
 var obj = {flippedCards: 0}
@@ -9,7 +10,8 @@ var obj = {flippedCards: 0}
 const Board = props => {
   const [cards, setCards] = useState(props.cards)
   const [checkers, setCheckers] = useState([])
-  const [completed, setCompleted] = useState([])  
+  const [completed, setCompleted] = useState([])
+  const [end, setEnd] = useState(false)
 
   const onCardClick = card => () => {    
     if (checkersFull(checkers) || cardAlreadyInCheckers(checkers, card)) return
@@ -49,7 +51,7 @@ const Board = props => {
     
     function checkWin(obj){
         if(obj.flippedCards == 15) {
-          alert("(:ניצחת")
+          setEnd(true)
           firebaseService.setHoldingGameByCategoryForUser(props.category, true)
         }
     }
@@ -62,8 +64,19 @@ const Board = props => {
         checkers.find(c => c.id === card.id) ||
         completed.includes(card.type),
     }))
-    setCards(newCards)
+    setCards(newCards) 
   }, [checkers, completed])
+
+  if(end == true){
+    return(
+      <div className='p-48'>
+        <CardHeader color='info'  >
+            <h5>{"סיימת את המשחק! "}</h5>
+        </CardHeader>
+      </div>
+    )
+  }
+
   return (
     <div className="Board">
       {cards.map(card => (
@@ -72,5 +85,6 @@ const Board = props => {
     </div>
   )
 }
+
 
 export default Board

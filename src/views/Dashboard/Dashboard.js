@@ -1,19 +1,5 @@
 import React, { useState, useEffect } from "react";
-import ChartistGraph from "react-chartist";
-import { Typography, Link, makeStyles } from "@material-ui/core";
-import Icon from "@material-ui/core/Icon";
-import Store from "@material-ui/icons/Store";
-import Warning from "@material-ui/icons/Warning";
-import DateRange from "@material-ui/icons/DateRange";
-import LocalOffer from "@material-ui/icons/LocalOffer";
-import Update from "@material-ui/icons/Update";
-import ArrowUpward from "@material-ui/icons/ArrowUpward";
-import AccessTime from "@material-ui/icons/AccessTime";
-import Accessibility from "@material-ui/icons/Accessibility";
-import BugReport from "@material-ui/icons/BugReport";
-import Code from "@material-ui/icons/Code";
-import Cloud from "@material-ui/icons/Cloud";
-// import BarChart from "components/Charts/BarChart.js"
+import { Link, makeStyles } from "@material-ui/core";
 import GridItem from "components/Grid/GridItem.js";
 import GridContainer from "components/Grid/GridContainer.js";
 import firebaseService from "../../firebase_services/firebaseService"
@@ -24,15 +10,7 @@ import Card from "components/Card/Card.js";
 import CardHeader from "components/Card/CardHeader";
 import CardBody from "components/Card/CardBody";
 import { Link as RouterLink } from 'react-router-dom';
-import {
-  dailySalesChart,
-  emailsSubscriptionChart,
-  completedTasksChart
-} from "variables/charts.js";
 
-import styles from "assets/jss/material-dashboard-react/views/dashboardStyle.js";
-
-// const useStyles = makeStyles(styles);
 
 export default function Dashboard(props) {
 
@@ -87,7 +65,6 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-
 function OneCardStatus(props) {
   const classes = useStyles();
   const { category, user, wordsCount, storyCount, categoryName } = props;
@@ -100,7 +77,7 @@ function OneCardStatus(props) {
         to={{ pathname: `/admin/${category}` }}
       >
         {/* <GridItem xs={12} sm={12} md={12}> */}
-        <Card hoverable>
+        <Card>
           <CardHeader color="info">
             <div className="sm:center text-center center block">
               <Info fontSize="1.8vw" variant="h2" component="h2"
@@ -109,7 +86,7 @@ function OneCardStatus(props) {
             </div>
           </CardHeader>
           <CardBody>
-            <GridContainer spacing={40}>
+            <GridContainer spacing={10}>
               <GridItem xs={12} sm={6}>
                 <div style={{ display: 'flex', alignItems: 'baseline' }}>
                   <div style={{ marginLeft: '0.5rem' }}>
@@ -135,7 +112,7 @@ function OneCardStatus(props) {
                 </div>
               </GridItem>
             </GridContainer>
-            <GridContainer spacing={40}>
+            <GridContainer spacing={10}>
               <GridItem xs={12} sm={6}>
                 <div style={{ display: 'flex', alignItems: 'baseline' }}>
                   <div style={{ marginLeft: '0.5rem' }}>

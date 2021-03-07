@@ -18,9 +18,7 @@ import logo from 'assets/img/logo.png'
 import { Link as RouterLink } from 'react-router-dom';
 
 
-
 const useStyles = makeStyles(styles);
-
 
 export default function Sidebar(props) {
   const classes = useStyles();
@@ -38,7 +36,6 @@ export default function Sidebar(props) {
     return window.location.href.indexOf(routeName) > -1 ? true : false;
   }
   const { color, image, logoText, routes } = props;
-
 
   var brand = (
     <div className={classes.logo}>
@@ -68,7 +65,6 @@ export default function Sidebar(props) {
         return 'category4';
     }
   }
-
 
   var links = (
     <List className={classes.list}>
@@ -250,8 +246,6 @@ export default function Sidebar(props) {
     </div>
   );
 }
-
-
 
 Sidebar.propTypes = {
   handleDrawerToggle: PropTypes.func,

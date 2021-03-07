@@ -2,7 +2,6 @@ import React, { Component, createContext } from "react";
 import firebaseService from 'firebase_services/firebaseService';
 
 
-
 export const UserContext = createContext({ user: null });
 class UserProvider extends Component {
 

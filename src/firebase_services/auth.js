@@ -21,34 +21,18 @@ class Auth extends Component {
 
         firebaseService.init(
             success => {
-                if ( !success )
-                {
+                if ( !success ) {
                     resolve();
                 }
             }
         );
 
         firebaseService.onAuthStateChanged(authUser => {
-            if ( authUser )
-            {
+            if ( authUser ){
                 console.log({message: 'Logging in with Firebase'});
-
-                /**
-                 * Retrieve user data from Firebase
-                 */
-                // firebaseService.getUserData(authUser.uid).then(user => {
-
-                    // this.props.setUserDataFirebase(user, authUser);
-
                     resolve();
-
                     console.log({message: 'Logged in with Firebase'});
                     resolve();
-                    
-                // }, error => {
-
-                //     resolve();
-                // })
             }
             else{
                 resolve();

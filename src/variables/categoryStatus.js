@@ -1,7 +1,5 @@
-import { Box, Typography, makeStyles, Link } from '@material-ui/core';
+import { makeStyles, Link } from '@material-ui/core';
 import React, { useState, useEffect } from "react";
-import cardBg from "assets/img/cardBg.jpg"
-import register from "assets/img/register.jpg"
 import Card from "components/Card/Card.js";
 import firebaseService from '../firebase_services/firebaseService'
 import GridItem from "components/Grid/GridItem.js";
@@ -9,7 +7,7 @@ import Info from 'components/Typography/Info'
 import CardHeader from "components/Card/CardHeader";
 import CardBody from "components/Card/CardBody";
 import { Link as RouterLink } from 'react-router-dom';
-import {SwitchCategory  } from "routes/categoryRoutes";
+
 
 const useStyles = makeStyles((theme) => ({
     card: {
@@ -76,7 +74,7 @@ function CategoryStatus(props) {
                 underline='none'
                 to={{ pathname: `/admin/${getCategoeryByName()}/${subCategory}`, state: category }}
             >
-                <Card hoverable>
+                <Card>
                 <CardHeader color="info">
                     <div className="sm:center text-center pt-82 center block">
                         <Info style={{ fontSize: "4.7vw" }} variant="h2" component="h2"

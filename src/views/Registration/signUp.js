@@ -1,14 +1,12 @@
 import React from 'react';
 import { useState, useRef, useEffect } from 'react';
 import firebaseService from 'firebase_services/firebaseService';
-import { Button, InputAdornment, Icon, Typography, Card, CardContent } from '@material-ui/core';
-import { Route, Link, Router, Redirect } from "react-router-dom";
-import Admin from "layouts/Admin.js";
+import { InputAdornment, Icon, Typography, Card, CardContent } from '@material-ui/core';
+import { Link, } from "react-router-dom";
 import CustomTextField from "components/CustomInput/CustomInput.js";
 import RegularButton from "components/CustomButtons/Button";
-import { createBrowserHistory } from "history";
 import Formsy from 'formsy-react';
-import ReactDOM from "react-dom";
+
 
 function SignUp() {
     const [isFormValid, setIsFormValid] = useState(false);
@@ -43,7 +41,6 @@ function SignUp() {
             console.log(error);
         })
     }
-
 
     return (
 

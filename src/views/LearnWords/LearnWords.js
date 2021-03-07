@@ -14,6 +14,8 @@ import RegularButton from '../../components/CustomButtons/Button'
 import Card from "../../components/Card/Card";
 import CardIcon from "../../components/Card/CardIcon";
 import {sortMapByKey, getMapSize} from "../../global.js";
+import LinearProgressWithLabel from 'components/LinearProgress/LinearProgressWithLabel';
+
 
 //this componnent is a layout for the Learn Words page
 class LearnWords extends Component {
@@ -26,7 +28,8 @@ class LearnWords extends Component {
             realHoldoingWord: 0, //the most advanced holding word that was learned
             wordsLength: 0,
             previousDisabled: false,
-            nextDisabled: false
+            nextDisabled: false,
+            loading: true
         };
         this.handleNext = this.handleNext.bind(this);
         this.handlePrevious = this.handlePrevious.bind(this);
@@ -73,6 +76,8 @@ class LearnWords extends Component {
                 }
                 //only now we will set the size, this will also indecate to show to screen
                 this.setState({wordsLength: wordsListLength});
+            }).then(()=>{
+                this.setState({loading: false});
             })
         })
     }
@@ -126,7 +131,9 @@ class LearnWords extends Component {
 
     render() {
         if (this.state.wordsLength === 0)
-            return null;
+        return (
+            <LinearProgressWithLabel />
+        )
 
         const styles = {
             'textAlign': "center",

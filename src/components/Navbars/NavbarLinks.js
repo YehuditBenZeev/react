@@ -7,15 +7,14 @@ import MenuList from "@material-ui/core/MenuList";
 import Grow from "@material-ui/core/Grow";
 import Paper from "@material-ui/core/Paper";
 import ClickAwayListener from "@material-ui/core/ClickAwayListener";
-import Hidden from "@material-ui/core/Hidden";
 import Poppers from "@material-ui/core/Popper";
 import Person from "@material-ui/icons/Person";
 import Dashboard from "@material-ui/icons/Dashboard";
 import Button from "components/CustomButtons/Button.js";
-import Admin from 'layouts/Admin';
 import history from '_history';
 import firebaseService from '../../firebase_services/firebaseService'
 import styles from "assets/jss/material-dashboard-react/components/rtlHeaderLinksStyle.js";
+
 
 const useStyles = makeStyles(styles);
 

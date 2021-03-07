@@ -4,6 +4,7 @@ import 'firebase/auth';
 import 'firebase/database';
 import 'firebase/firestore';
 
+
 // get user category data
 function getDataByCategory(category, data, user){
     if(category == "category1")
@@ -34,7 +35,6 @@ class FirebaseService {
             this.auth && this.auth.createUserWithEmailAndPassword(email, password).then(
                 (response) => {
                     const user = response.user;
-                    console.log("here22");
                     this.db.collection('users').doc(user.uid).set({
                         email: email,
                         displayName: username,
@@ -261,7 +261,6 @@ class FirebaseService {
 
         return new Promise((resolve, reject) => {
             this.db.collection("stories").doc(category).get().then((story) => {
-                // console.log("getStoryByCategory ", story.data());
                 resolve(story.data());
             }).catch((error) => {
                 reject(error)
@@ -299,10 +298,7 @@ class FirebaseService {
         if (!uid) return null;
         try {
           const userDocument = await this.db.collection('users').doc(uid).get();
-        //   const doc_listener = this.db.collection('users').doc(uid).onSnapshot(snap => {
-        //     this.user = userDocument.data();
-        //     this.uid = uid;
-        //   });
+       
           this.uid = uid;
           this.user = userDocument.data();
           this.updateDocument(this.uid);
